@@ -63,7 +63,8 @@ function App() {
     if (query.length === 1) {
       return [unicodeNumbers.findIndex(el => el === query.charCodeAt(0).toString(16).padStart(4, '0'))]
     }
-    const results = unicodeNames.filter(uni => uni.includes('RHO'))
+    const results = unicodeNames.map((el, index) => (el.includes('RHO') ? index : false)).filter(el => el)
+    console.log(results.length, results)
     return results
   }
   function rangeHandler(results) {
@@ -98,7 +99,7 @@ function App() {
                 <li key={index}>{item}</li>
               ))}
             </ul>
-            {query.length > 1 || hits.length > 1 ? <Paginators increment={() => setCurrentPage(currentPage + 1)} decrement={() => setCurrentPage(currentPage - 1)} currentPage={currentPage} /> : ''}
+            {query.length > 1 || hits.length > 1 ? <Paginators decrement={() => setCurrentPage(Math.max(0, currentPage - 1))} increment={() => setCurrentPage(Math.floor(Math.min(hits.length / resultsPerPage), currentPage + 1))} currentPage={currentPage} /> : ''}
           </>
         )}
       </>
