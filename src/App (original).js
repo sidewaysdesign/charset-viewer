@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useReducer } from 'react'
+import logo from './logo.svg'
 import raw from 'raw.macro'
-import Paginators from './components/Paginators'
+import Incrementors from './components/Incrementors'
 
 import './App.css'
-const uniCodePos = 0
-const uniNamePos = 1
-const unicodeData = raw('./unicode/UnicodeData.txt')
-  .replace(/^\s+|\s+$/g, '')
-  .split('\n')
-const unicodeNames = unicodeData.map(a => a.split(';')[uniNamePos])
-const unicodeNumbers = unicodeData.map(a => a.split(';')[uniCodePos])
+
+const unicode = raw('./unicode/UnicodeData.txt').split('\n')
+
 function fetchReducer(state, action) {
   switch (action.type) {
     case 'FETCH_START':
@@ -37,14 +34,17 @@ function fetchReducer(state, action) {
 }
 
 function App() {
+  const [searchTerm, setSearchTerm] = useState('')
+  const [searchResults, setSearchResults] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [resultsPerPage, setResultsPerPage] = useState(4)
   const [{ hits, hasError, isLoading }, dispatch] = useReducer(fetchReducer, {
-    hits: [],
+    hits: unicode,
     isLoading: true,
     hasError: false
   })
-  const [query, setQuery] = useState('RHO')
+  const [query, setQuery] = useState('')
+  const [rangedResults, setRangedResults] = useState([])
 
   async function fetchHits(query, dispatch) {
     dispatch({ type: 'FETCH_START' })
@@ -57,34 +57,33 @@ function App() {
   }
 
   function searchHandler(query) {
-    if (query.length === 0) {
-      return []
-    }
-    if (query.length === 1) {
-      return [unicodeNumbers.findIndex(el => el === query.charCodeAt(0).toString(16).padStart(4, '0'))]
-    }
-    const results = unicodeNames.filter(uni => uni.includes('RHO'))
+    const results = unicode.filter(uni => uni.includes(query.toUpperCase()))
     return results
   }
   function rangeHandler(results) {
     const rangeStart = resultsPerPage * currentPage
     const rangeEnd = rangeStart + resultsPerPage
-    return results.slice(rangeStart, rangeEnd)
+    return results.slice(rangeStart, rangeStart + resultsPerPage)
   }
+  // function filterResultsRange(results) {
+  //   const rangeStart = resultsPerPage * currentPage
+  //   return results.slice(rangeStart, rangeStart + resultsPerPage)
+  // }
   useEffect(() => {
-    const timeOutId = setTimeout(() => fetchHits(query, dispatch), 250)
+    const timeOutId = setTimeout(() => fetchHits(query, dispatch), 500)
     setCurrentPage(0)
     return () => clearTimeout(timeOutId)
   }, [query])
 
+  function updateCurrentPage() {}
   return (
     <div className="App">
       <>
         <input type="text" value={query} onChange={event => setQuery(event.target.value)} />
-        {query.length > 0 && hasError && <div>Search error...</div>}
+        {hasError && <div>Search error...</div>}
         {isLoading ? (
           <div>Loading...</div>
-        ) : query.length === 0 ? (
+        ) : query.length == 0 ? (
           <div className="no_results">Enter search term</div>
         ) : !hits.length ? (
           <>
@@ -94,11 +93,11 @@ function App() {
         ) : (
           <>
             <ul>
-              {rangeHandler(hits).map((item, index) => (
-                <li key={index}>{item}</li>
+              {rangeHandler(hits).map(item => (
+                <li key={item.objectID}>{item}</li>
               ))}
             </ul>
-            {query.length > 1 || hits.length > 1 ? <Paginators increment={() => setCurrentPage(currentPage + 1)} decrement={() => setCurrentPage(currentPage - 1)} currentPage={currentPage} /> : ''}
+            <Incrementors increment={() => setCurrentPage(currentPage + 1)} decrement={() => setCurrentPage(currentPage - 1)} currentPage={currentPage} />
           </>
         )}
       </>
