@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useReducer } from 'react'
 import raw from 'raw.macro'
-import Paginators from './components/Paginators'
+import Paginators from './components/Paginators/Paginators'
+import CharacterCard from './components/CharacterCard/CharacterCard'
 
 import './App.css'
+
 const uniCodePos = 0
 const uniNamePos = 1
 const unicodeData = raw('./unicode/UnicodeData.txt')
@@ -96,10 +98,13 @@ function App() {
           <>
             <ul>
               {rangeHandler(hits).map((item, index) => (
-                <li key={index}>{item}</li>
+                <>
+                  <CharacterCard item={unicodeData[item]} key={index} />
+                  {/* <li key={index}>{item}</li> */}
+                </>
               ))}
             </ul>
-            {query.length > 1 || hits.length > 1 ? <Paginators decrement={() => setCurrentPage(Math.max(0, currentPage - 1))} increment={() => setCurrentPage(Math.floor(Math.min(hits.length / resultsPerPage), currentPage + 1))} currentPage={currentPage} /> : ''}
+            {query.length > 1 || hits.length > 1 ? <Paginators decrement={() => setCurrentPage(Math.max(0, currentPage - 1))} increment={() => setCurrentPage(Math.floor(Math.min(hits.length / resultsPerPage, currentPage + 1)))} currentPage={currentPage} numPages={Math.floor(hits.length / resultsPerPage)} /> : ''}
           </>
         )}
       </>
