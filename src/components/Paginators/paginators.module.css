@@ -1,5 +1,3 @@
-$primary: purple;
-
 .Paginators {
   display: flex;
   width: auto;
@@ -14,7 +12,7 @@ $primary: purple;
     height: 2.25rem;
     color: transparent;
     &:hover {
-      background-color: color($primary a(30%));
+      background-color: color(var(--color-text)) a(30%));
     }
     &.increment,
     &.decrement {

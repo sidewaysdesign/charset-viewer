@@ -99,6 +99,7 @@ module.exports = function (webpackEnv) {
             require('postcss-color-function'),
             require('postcss-preset-env'),
             require('postcss-flexbugs-fixes'),
+            /* require('postcss-modules-values'), */
             require('postcss-preset-env')({
               autoprefixer: {
                 flexbox: 'no-2009'

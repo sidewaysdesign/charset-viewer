@@ -1,7 +1,8 @@
-$primary: purple;
+@import './variables.css';
 
 .App {
   text-align: center;
+  font-weight: 300;
 }
 
 .App-logo {
@@ -16,14 +17,13 @@ $primary: purple;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  display: block;
+  font-size: 2.625rem;
+  color: $primary;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  word-spacing: 0.07em;
+  line-height: 1;
 }
 
 .App-link {
@@ -46,9 +46,9 @@ button {
   border: none;
   background: transparent;
   line-height: 1;
-  color: $primary;
+  color: var(--color-text);
   display: block;
-  border: 1px solid $primary;
+  border: 1px solid var(--color-text);
   border-radius: 0.5rem;
   transition: 0.5s all ease;
   padding: 0;
@@ -56,4 +56,12 @@ button {
   &:focus {
     outline: none;
   }
+}
+.main_input {
+  padding: $margin $margin resolve($margin * 0.75) $margin;
+  border: 1px solid color($secondary lightness(75%));
+  outline: none;
+  font-size: 2.75rem;
+  line-height: 1;
+  color: $secondary;
 }

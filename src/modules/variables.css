@@ -1,0 +1,11 @@
+$primary: #42a5f5;
+$primary-dark: color($primary blackness(30%));
+$secondary: color(black lightness(40%));
+
+$margin: 0.5rem;
+
+.icon_clipboard {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="17.675" height="31.601" viewBox="0 0 17.675 31.601"><path id="Path_1" d="M12.957,30.68,26.106,17.532,12.957,4.383" transform="translate(27.981 33.332) rotate(180)" fill="none" stroke="%23000" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.5"/></svg>');
+}
