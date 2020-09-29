@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useReducer } from 'react'
+import { useDebounce } from 'use-debounce'
 import raw from 'raw.macro'
 import Paginators from './components/Paginators/Paginators'
 import CharacterCard from './components/CharacterCard/CharacterCard'
@@ -47,23 +48,54 @@ function App() {
     isLoading: true,
     hasError: false
   })
-  const [query, setQuery] = useState('😃')
+  const [query, setQuery] = useState('LATIN')
+  const [value] = useDebounce(query, 1000)
 
   function searchHandler(query) {
-    const all_emo_test = /^(?:[\u2700-\u27bf]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff]|[\u0023-\u0039]\ufe0f?\u20e3|\u3299|\u3297|\u303d|\u3030|\u24c2|\ud83c[\udd70-\udd71]|\ud83c[\udd7e-\udd7f]|\ud83c\udd8e|\ud83c[\udd91-\udd9a]|\ud83c[\udde6-\uddff]|[\ud83c[\ude01-\ude02]|\ud83c\ude1a|\ud83c\ude2f|[\ud83c[\ude32-\ude3a]|[\ud83c[\ude50-\ude51]|\u203c|\u2049|[\u25aa-\u25ab]|\u25b6|\u25c0|[\u25fb-\u25fe]|\u00a9|\u00ae|\u2122|\u2139|\ud83c\udc04|[\u2600-\u26FF]|\u2b05|\u2b06|\u2b07|\u2b1b|\u2b1c|\u2b50|\u2b55|\u231a|\u231b|\u2328|\u23cf|[\u23e9-\u23f3]|[\u23f8-\u23fa]|\ud83c\udccf|\u2934|\u2935|[\u2190-\u21ff])$/.test(query)
+    const searchmode = 'auto'
     if (query.length === 0) {
       return []
     }
-    if (query.length === 1 && !all_emo_test) {
-      return [unicodeNumbers.findIndex(el => el === query.charCodeAt(0).toString(16).padStart(4, '0'))]
+    let results = []
+    const emo_test = q => {
+      return /^(?:[\u2700-\u27bf]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff]|[\u0023-\u0039]\ufe0f?\u20e3|\u3299|\u3297|\u303d|\u3030|\u24c2|\ud83c[\udd70-\udd71]|\ud83c[\udd7e-\udd7f]|\ud83c\udd8e|\ud83c[\udd91-\udd9a]|\ud83c[\udde6-\uddff]|[\ud83c[\ude01-\ude02]|\ud83c\ude1a|\ud83c\ude2f|[\ud83c[\ude32-\ude3a]|[\ud83c[\ude50-\ude51]|\u203c|\u2049|[\u25aa-\u25ab]|\u25b6|\u25c0|[\u25fb-\u25fe]|\u00a9|\u00ae|\u2122|\u2139|\ud83c\udc04|[\u2600-\u26FF]|\u2b05|\u2b06|\u2b07|\u2b1b|\u2b1c|\u2b50|\u2b55|\u231a|\u231b|\u2328|\u23cf|[\u23e9-\u23f3]|[\u23f8-\u23fa]|\ud83c\udccf|\u2934|\u2935|[\u2190-\u21ff])/.test(q)
     }
-    if (query.length > 1 || all_emo_test) {
+    const alphaTest = q => {
+      return /^[\w -]+$/.test(q)
+    }
+    const wordTest = q => /^\b[\w -]+$/.test(q)
+
+    const firstWholeWordTest = q => /^[\w -]+?\b[\w -]+?$/.test(q)
+
+    if (query.length === 0) return []
+    if (searchmode == 'name' || (alphaTest(query) && query.length > 1)) {
+      /* SEARCH BY DESCRIPTIVE NAME */
+      if (firstWholeWordTest(query)) {
+        /* assumes user is looking for specific phrase and has started typing second word */
+        const firstWordRegex = new RegExp('\\b' + query)
+        const queryArr = query.toLowerCase().split(' ')
+        unicodeNames.forEach((el, index) => {
+          if (el.match(firstWordRegex)) results.push(index) // checks for exact match with whole first word; assumes user is still typing second word
+          if (queryArr.every(val => el.toLowerCase().split(' ').includes(val))) results.push(index) // checks for whole words in any order
+        })
+      } else {
+        /* checks for raw match while user is typing first word */
+        results = unicodeNames.map((el, index) => (el.includes(query.toUpperCase()) ? index : false)).filter(el => el)
+      }
+      if (results.length && searchmode !== 'name') return [...new Set(results)] // returns an array of unique indices; if empty, no return and continue char-by-char search in auto mode
+    }
+    if (searchmode == 'glyph' || 1 == 1) {
+      // if (query.length > 1 && !emo_test(query)) {
       const utf8String = Array.from(query)
-      utf8String.map(el => {
-        return [unicodeNumbers.findIndex(el => el === query.charCodeAt(0).toString(16).padStart(4, '0'))]
+      utf8String.map(glyph => {
+        // console.log(glyph.codePointAt().toString(16))
+        // console.log(unicodeNumbers.findIndex(el => el === glyph.codePointAt().toString(16).toUpperCase().padStart(4, '0')))
+        // return [unicodeNumbers.findIndex(el => el === (all_emo_test(query) ? '0x') + glyph.toString(16).padStart(4, '0'))]
+        results.push(unicodeNumbers.findIndex(el => el === glyph.codePointAt().toString(16).toUpperCase().padStart(4, '0')))
+        // return results
       })
     }
-    const results = unicodeNames.map((el, index) => (el.includes(query) ? index : false)).filter(el => el)
+    // results = unicodeNames.map((el, index) => (el.includes(query) ? index : false)).filter(el => el)
     return results
   }
   function rangeHandler(results) {
