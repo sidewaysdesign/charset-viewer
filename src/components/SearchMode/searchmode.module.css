@@ -1,0 +1,57 @@
+@import '../../modules/breakpoints.css';
+@import '../../modules/variables.css';
+
+.SearchMode {
+  &_Container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: resolve($margin * 2) $margin $margin $margin;
+  }
+  &_ButtonSet {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  &_Button {
+    transition: none;
+    font-size: 1.1875rem;
+    position: relative;
+    opacity: 0.5;
+    transition: 0.3s all ease;
+    &:before {
+      content: '';
+      box-sizing: border-box;
+      border: 2px solid $primary;
+      width: 0.875em;
+      height: 0.875em;
+      background-color: white;
+      display: inline-block;
+      position: relative;
+      border-radius: 50%;
+      margin-bottom: -0.0625em;
+      margin-right: 0.375rem;
+    }
+    &:hover {
+      opacity: 1;
+      &:before {
+      }
+    }
+  }
+  &_Checkbox {
+    &:disabled + label {
+      opacity: 0.5;
+    }
+  }
+}
+:global {
+  .defaulted {
+  }
+  .selected {
+    opacity: 1;
+    &:before {
+      border-width: 0.3125rem;
+    }
+  }
+}

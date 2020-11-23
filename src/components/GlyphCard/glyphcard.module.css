@@ -1,15 +1,10 @@
 @import '../../modules/breakpoints.css';
 @import '../../modules/variables.css';
 $iconsize: 1.125rem;
-@define-mixin atMd {
-  @media (min-width: 768px) {
-    @mixin-content;
-  }
-}
 
 $margin: 0.5rem;
 $cardsize: 7.5rem;
-.charactercard {
+.glyphcard {
   &_unit {
     transition: 0.3s all ease;
     position: relative;
@@ -83,8 +78,8 @@ $cardsize: 7.5rem;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    height: 2.2em;
-    max-height: 2.2em;
+    height: 2em;
+    max-height: 2em;
     @mixin atSmmd {
       -webkit-line-clamp: 3;
       height: 3em;

@@ -34,8 +34,8 @@ function fetchReducer(state, action) {
 }
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [searchResults, setSearchResults] = useState([])
+  const [searchTerm, splitseriesTerm] = useState('')
+  const [searchResults, splitseriesResults] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [resultsPerPage, setResultsPerPage] = useState(4)
   const [{ hits, hasError, isLoading }, dispatch] = useReducer(fetchReducer, {

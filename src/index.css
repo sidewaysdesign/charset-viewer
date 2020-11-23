@@ -158,7 +158,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.charactercard_container {
+.glyphcard_container {
   padding-left: $margin;
   padding-right: $margin;
   display: flex;
