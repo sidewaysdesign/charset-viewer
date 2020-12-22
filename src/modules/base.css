@@ -1,8 +1,17 @@
 @import './variables.css';
 
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
 .App {
-  text-align: center;
+  /* text-align: center; */
   font-weight: 300;
+  box-sizing: border-box;
+  padding: 1rem;
 }
 
 .App-logo {
@@ -20,10 +29,11 @@
   display: block;
   font-size: 2.625rem;
   color: $primary;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: -0.02em;
   word-spacing: 0.07em;
   line-height: 1;
+  margin-top: 0;
 }
 
 .App-link {
@@ -58,15 +68,19 @@ button {
   }
 }
 .main_input {
-  padding: $margin $margin resolve($margin * 0.75) $margin;
+  padding: resolve($margin * 1.5);
   border: 1px solid color($secondary lightness(75%));
   outline: none;
   font-size: 2.75rem;
   line-height: 1;
-  color: $secondary;
+  color: black;
+  width: 100%;
   ::placeholder: '';
+  font-family: 'IBM Plex Sans', 'apple color emoji', 'segoe ui emoji', 'noto color emoji', notocoloremoji, 'segoe ui symbol', 'android emoji', emojisymbols, 'emojione mozilla', 'twemoji mozilla', 'segoe ui symbol', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
-
+label {
+  text-align: left;
+}
 pre {
   position: fixed;
   bottom: 0.5rem;

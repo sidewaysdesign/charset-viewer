@@ -48,6 +48,8 @@ $cardsize: 7.5rem;
     width: 100%;
     text-align: center;
     padding-bottom: $margin;
+
+    font-family: 'IBM Plex Sans Bold', 'apple color emoji', 'segoe ui emoji', 'noto color emoji', notocoloremoji, 'segoe ui symbol', 'android emoji', emojisymbols, 'emojione mozilla', 'twemoji mozilla', 'segoe ui symbol', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
     &:hover {
     }
   }
@@ -146,6 +148,19 @@ $cardsize: 7.5rem;
       transition: 0.5s opacity ease;
       opacity: 1;
     }
+  }
+}
+.sideborder {
+  span {
+    background-clip: padding-box;
+    padding: 0;
+    box-sizing: border-box;
+    white-space: pre;
+    position: relative;
+    display: inline-block;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-width: 0 1px;
+    background: repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06) 6px, rgba(0, 0, 0, 0.09) 6px, rgba(0, 0, 0, 0.09) 12px);
   }
 }
 :global .copied {

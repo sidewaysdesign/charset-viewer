@@ -1,11 +1,12 @@
-import React, { useContext } from 'react'
+import React, { useContext, useCallback } from 'react'
 import DispatchContext from '../../DispatchContext'
 import { unicodeNames, unicodeNumbers } from '../../unicode/UnicodeData'
 import Pluralize from 'pluralize'
 
-function SearchInput({ query, isSplitSeries }) {
+function SearchInput({ query, isSplitSeries, onInputChange }) {
   const appDispatch = useContext(DispatchContext)
   let newquery = query
+  const resetCurrentPage = useCallback(e => onInputChange(0), [onInputChange])
   function handleFieldChange(e) {
     const newquery = e.target.value
     if (newquery.length === 0) {
@@ -67,6 +68,7 @@ function SearchInput({ query, isSplitSeries }) {
     // }
     console.log('results', results)
     if (results.length) {
+      resetCurrentPage()
       appDispatch({ type: 'showsearchresults', results: results, query: newquery })
     }
     return
