@@ -47,7 +47,11 @@ function GlyphCard({ item }) {
   console.log(characterString == '')
   return (
     <div className={styles.glyphcard_unit}>
-      <CopyToClipboard className={`${styles.glyphcard_bigletter}${copiedEntity.copied ? ' copied' : ''}${charname.toLowerCase().includes('space') || (charname.toLowerCase().includes('invisible') && isBlankChar(characterString)) ? ` ${styles.sideborder}` : ''}`} text={characterString} onCopy={() => copyClipHandler()}>
+      <CopyToClipboard
+        className={`${styles.glyphcard_bigletter}${copiedEntity.copied ? ' copied' : ''}
+      ${(charname.toLowerCase().includes('space') || charname.toLowerCase().includes('invisible')) && isBlankChar(characterString) ? ` ${styles.sideborder}` : ''}`}
+        text={characterString}
+        onCopy={() => copyClipHandler()}>
         <h3>
           <span>{characterString}</span>
         </h3>
