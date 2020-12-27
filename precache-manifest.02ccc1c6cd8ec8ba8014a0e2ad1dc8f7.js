@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f0e11f12ca35092fe64c554457ea72a0",
+    "revision": "f0a1b7f27b7667cc5d36ae885fc8cc7b",
     "url": "/charset-viewer/index.html"
   },
   {
-    "revision": "302db9f0afc1f561fd0f",
+    "revision": "9fa0293a26a5ba3aa49c",
     "url": "/charset-viewer/static/css/main.b875b494.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/charset-viewer/static/js/2.175d4dec.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "302db9f0afc1f561fd0f",
-    "url": "/charset-viewer/static/js/main.9c433648.chunk.js"
+    "revision": "9fa0293a26a5ba3aa49c",
+    "url": "/charset-viewer/static/js/main.fea91d9b.chunk.js"
   },
   {
     "revision": "87aba12d1ded4798b634",
