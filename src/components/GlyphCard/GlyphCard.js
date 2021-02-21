@@ -44,7 +44,7 @@ function GlyphCard({ item }) {
       setTimeout(() => setCopiedEntity({ copied: false }), 1250)
     }
   }
-  console.log(characterString == '')
+  // console.log(characterString == '')
   return (
     <div className={styles.glyphcard_unit}>
       <CopyToClipboard

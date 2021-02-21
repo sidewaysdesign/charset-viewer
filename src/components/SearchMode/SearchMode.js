@@ -10,8 +10,8 @@ function SearchMode({ splitseries, query }) {
     <div className={styles.SearchMode_Container}>
       {/* {JSON.stringify({ query: query })} */}
       <div className={styles.SearchMode_Checkbox}>
-        <input type="checkbox" id="splitseries" disabled={!isEnabled} checked={splitseries} className={styles.SearchMode_Checkbox} onChange={e => appDispatch({ type: 'splitseries', value: e.target.checked })} />
-        <label htmlFor="splitseries">Split into series</label>
+        {/* <input type="checkbox" id="splitseries" disabled={!isEnabled} checked={splitseries} className={styles.SearchMode_Checkbox} onChange={e => appDispatch({ type: 'splitseries', value: e.target.checked })} /> */}
+        {/* <label htmlFor="splitseries">Split into series</label> */}
       </div>
     </div>
   )

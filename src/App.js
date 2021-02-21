@@ -50,7 +50,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    console.log('STORING?', uiStorage, JSON.stringify(uiStorage))
+    // console.log('STORING?', uiStorage, JSON.stringify(uiStorage))
     localStorage.setItem('uiStorage', JSON.stringify(uiStorage))
   }, [uiStorage])
 

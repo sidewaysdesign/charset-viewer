@@ -2,8 +2,10 @@ import React, { useContext, useCallback } from 'react'
 import DispatchContext from '../../DispatchContext'
 import { unicodeNames, unicodeNumbers } from '../../unicode/UnicodeData'
 import Pluralize from 'pluralize'
+import Fuse from 'fuse.js'
 
 function SearchInput({ query, isSplitSeries, onInputChange }) {
+  const fuse = new Fuse(unicodeNames, { includeScore: true })
   const appDispatch = useContext(DispatchContext)
   let newquery = query
   const resetCurrentPage = useCallback(e => onInputChange(0), [onInputChange])
@@ -25,18 +27,18 @@ function SearchInput({ query, isSplitSeries, onInputChange }) {
       const variations = [...new Set([Pluralize.singular(q), Pluralize.plural(q)])]
       variations.forEach(w => {
         const firstWordRegex = new RegExp(`\\b${w}\\b`)
-        console.log('firstWordRegex ->', firstWordRegex)
+        // console.log('firstWordRegex ->', firstWordRegex)
         unicodeNames.forEach((el, index) => {
           if (firstWordRegex.test(el)) localResults.push(index) // checks for exact match with whole first word; assumes user is still typing second word
         })
       })
       const cleanedLocal = [...new Set(localResults.filter(num => num === parseInt(num)))]
 
-      console.log('firstWholeWord RESULTS', cleanedLocal)
+      // console.log('firstWholeWord RESULTS', cleanedLocal)
       return cleanedLocal
     }
     const rawMatch = q => {
-      console.log('rawMatch')
+      // console.log('rawMatch')
       return unicodeNames.map((el, index) => (el.includes(newquery.toUpperCase()) ? index : false)).filter(el => el)
     }
 
@@ -52,11 +54,13 @@ function SearchInput({ query, isSplitSeries, onInputChange }) {
     // if (alphaTest(newquery) && newquery.length > 1) {
     /* SEARCH BY DESCRIPTIVE NAME */
     // if (firstWholeWordTest(newquery)) {
-    results = [...firstWholeWord(newquery.toUpperCase())]
+    // results = [...firstWholeWord(newquery.toUpperCase())]
     /* assumes user is looking for specific phrase and has started typing second word */
     // } // results = rawMatch(newquery)
     // results = codePointMatch(newquery)
-    results = [...codePointMatch(newquery)]
+    const fuseresults = fuse.search(newquery, { limit: 10 }).map(x => x.refIndex)
+
+    results = [...fuseresults, ...codePointMatch(newquery)]
 
     // if (results.length && isSplitSeries) {
     // results = [...new Set(results)]
@@ -66,7 +70,6 @@ function SearchInput({ query, isSplitSeries, onInputChange }) {
     //   // if (isSplitSeries === 'glyph' || 1 == 1) {
     //   results = codePointMatch(newquery)
     // }
-    console.log('results', results)
     if (results.length) {
       resetCurrentPage()
       appDispatch({ type: 'showsearchresults', results: results, query: newquery })
