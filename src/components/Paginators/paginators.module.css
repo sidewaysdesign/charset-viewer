@@ -1,0 +1,42 @@
+.Paginators {
+  display: flex;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.88rem;
+  button {
+    width: 2.25rem;
+    height: 2.25rem;
+    color: transparent;
+    &:hover {
+      background-color: color(var(--color-text)) a(30%));
+    }
+    &.increment,
+    &.decrement {
+      background-repeat: no-repeat;
+      background-size: 1.125rem 1.125rem;
+      background-position: center center;
+      &.increment {
+        border-size: 10px;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="17.675" height="31.601" viewBox="0 0 17.675 31.601"><path id="Path_1" d="M12.957,30.68,26.106,17.532,12.957,4.383" transform="translate(27.981 33.332) rotate(180)" fill="none" stroke="%23000" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.5"/></svg>');
+      }
+      &.decrement {
+        border-size: 10px;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="17.675" height="31.601" viewBox="0 0 17.675 31.601"><path id="Path_1" d="M12.957,30.68,26.106,17.532,12.957,4.383" transform="translate(-10.306 -1.731)" fill="none" stroke="%23000" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.5"/></svg>');
+      }
+    }
+    &[disabled] {
+      opacity:0.2;
+    }
+  }
+  p {
+    text-transform: uppercase;
+    color: #999;
+    span {
+      color: #000;
+    }
+  }
+}

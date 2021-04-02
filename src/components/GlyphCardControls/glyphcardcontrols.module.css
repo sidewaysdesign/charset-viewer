@@ -1,0 +1,40 @@
+@import '../../modules/breakpoints.css';
+@import '../../modules/variables.css';
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  position: relative;
+  padding: 0.5rem $margin;
+  margin-bottom: $margin;
+  z-index: 3;
+  @mixin atMd {
+    &::before {
+      content: 'Glyphs';
+      font-weight: 600;
+      color: white;
+      display: block;
+      font-size: $fontsize2;
+      line-height: 1;
+    }
+  }
+}
+.toggle {
+  line-height: 1;
+  position: relative;
+  color: color(white a(50%));
+  font-weight: 600;
+  font-size: $fontsize0;
+  text-transform: uppercase;
+  span {
+    @mixin toggleIcon;
+  }
+}
+.active {
+  color: white;
+  span {
+    @mixin toggleIconActive;
+  }
+}

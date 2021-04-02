@@ -1,0 +1,180 @@
+@define-mixin atTn {
+  @media (min-width: 31.5rem) {
+    @mixin-content;
+  }
+}
+@define-mixin atTnsm {
+  @media (min-width: 24rem) {
+    @mixin-content;
+  }
+}
+@define-mixin atX {
+  @media (min-width: 375px) {
+    @mixin-content;
+  }
+}
+@define-mixin atSm {
+  @media (min-width: 480px) {
+    @mixin-content;
+  }
+}
+@define-mixin atSmmd {
+  @media (min-width: 640px) {
+    @mixin-content;
+  }
+}
+@define-mixin atLgminh {
+  @media (min-width: 45rem) {
+    @mixin-content;
+  }
+}
+@define-mixin atMd {
+  @media (min-width: 768px) {
+    @mixin-content;
+  }
+}
+@define-mixin atMdlg {
+  @media (min-width: 940px) {
+    @mixin-content;
+  }
+}
+@define-mixin atMdmdlg {
+  @media (min-width: 992px) {
+    @mixin-content;
+  }
+}
+@define-mixin atLg {
+  @media (min-width: 1024px) {
+    @mixin-content;
+  }
+}
+@define-mixin atLgxl {
+  @media (min-width: 1056px) {
+    @mixin-content;
+  }
+}
+@define-mixin atXl {
+  @media (min-width: 1200px) {
+    @mixin-content;
+  }
+}
+@define-mixin atXxl {
+  @media (min-width: 85rem) {
+    @mixin-content;
+  }
+}
+
+@define-mixin overTn {
+  @media (min-width: 26.01rem) {
+    @mixin-content;
+  }
+}
+@define-mixin overTnsm {
+  @media (min-width: 26.01rem) {
+    @mixin-content;
+  }
+}
+@define-mixin overSm {
+  @media (min-width: 30.01rem) {
+    @mixin-content;
+  }
+}
+@define-mixin overSmmd {
+  @media (min-width: 0.01370.5rem) {
+    @mixin-content;
+  }
+}
+@define-mixin overLgminh {
+  @media (min-width: 45.01rem) {
+    @mixin-content;
+  }
+}
+@define-mixin overMd {
+  @media (min-width: 48.01rem) {
+    @mixin-content;
+  }
+}
+@define-mixin overMdlg {
+  @media (min-width: 0.01560.25rem) {
+    @mixin-content;
+  }
+}
+@define-mixin overMdmdlg {
+  @media (min-width: 62.01rem) {
+    @mixin-content;
+  }
+}
+@define-mixin overLg {
+  @media (min-width: 64.01rem) {
+    @mixin-content;
+  }
+}
+@define-mixin overLgxl {
+  @media (min-width: 66.01rem) {
+    @mixin-content;
+  }
+}
+@define-mixin overXl {
+  @media (min-width: 72.01rem) {
+    @mixin-content;
+  }
+}
+@define-mixin overXxl {
+  @media (min-width: 85.01rem) {
+    @mixin-content;
+  }
+}
+
+@define-mixin uptoTn {
+  @media (max-width: 503px) {
+    @mixin-content;
+  }
+}
+@define-mixin uptoTnsm {
+  @media (max-width: 415px) {
+    @mixin-content;
+  }
+}
+@define-mixin uptoSm {
+  @media (max-width: 479px) {
+    @mixin-content;
+  }
+}
+@define-mixin uptoSmmd {
+  @media (max-width: 639px) {
+    @mixin-content;
+  }
+}
+@define-mixin uptoMd {
+  @media (max-width: 767px) {
+    @mixin-content;
+  }
+}
+@define-mixin uptoMdlg {
+  @media (max-width: 899px) {
+    @mixin-content;
+  }
+}
+
+@define-mixin twixtMd-Xl {
+  @media (min-width: 768px) and (max-width: 1200px) {
+    @mixin-content;
+  }
+}
+@define-mixin twixtMd-Lg {
+  @media (min-width: 768px) and (max-width: 1023px) {
+    @mixin-content;
+  }
+}
+
+@define-mixin narrowMain {
+  @mixin atSm {
+    max-width: $contentwidth-Sm;
+  }
+  @mixin atMd {
+    max-width: $contentwidth-Md;
+  }
+  @mixin atLg {
+    max-width: $contentwidth-Lg;
+  }
+}
