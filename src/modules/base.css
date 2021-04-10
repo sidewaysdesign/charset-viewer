@@ -42,15 +42,19 @@ button {
   }
 }
 .main_input {
+  margin-top: $margin;
   padding: resolve($margin * 1.5);
   border: 1px solid color($secondary lightness(75%));
   outline: none;
-  font-size: 2.75rem;
+  font-size: 2rem;
   line-height: 1;
   color: black;
   width: 100%;
   ::placeholder: '';
   font-family: 'Inter', 'apple color emoji', 'segoe ui emoji', 'noto color emoji', notocoloremoji, 'segoe ui symbol', 'android emoji', emojisymbols, 'emojione mozilla', 'twemoji mozilla', 'segoe ui symbol', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  @mixin atMd {
+    font-size: 2.625rem;
+  }
 }
 label {
   text-align: left;

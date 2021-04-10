@@ -9,6 +9,8 @@ $muted2: #ebd0f6;
 $margin: 0.5rem;
 $grey: #707070;
 $charcoal: #4a4a4a;
+$mist: #dfdfdf;
+$storm: color(#e0e7e9 tint(40%));
 
 $fontsize0: 0.82rem;
 $fontsize1: 0.9375rem;
@@ -27,7 +29,13 @@ $ramplightfaded: linear-gradient(90deg, $muted1, $muted2);
 }
 $togglewidth: 2.125rem;
 $toggledot: 1.25rem;
-
+@define-mixin controlText {
+  line-height: 1;
+  position: relative;
+  font-weight: 600;
+  font-size: $fontsize0;
+  text-transform: uppercase;
+}
 @define-mixin toggleIcon {
   padding-right: calc($togglewidth + $margin);
   transition: 0.3s all ease;
@@ -60,5 +68,43 @@ $toggledot: 1.25rem;
   opacity: 1 !important;
   &::after {
     right: 0 !important;
+  }
+}
+@define-mixin copybutton {
+  font-family: 'Inter', sans-serif;
+  color: black;
+  font-weight: 500;
+  display: block;
+  font-size: 1rem;
+  background-color: $mist;
+  border-radius: 100px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: $margin resolve($margin * 2);
+  &:active,
+  &:focus {
+    transition: 0.3s all ease;
+    opacity: 0.75;
+    transform: translateY(0.125rem);
+  }
+}
+@define-mixin pseudocopybutton {
+  &:active,
+  &:focus {
+    transition: 0.3s all ease;
+    opacity: 0.75;
+    transform: translateY(0.125rem);
+  }
+  &::after {
+    padding: 0.375rem 0.5rem;
+    transform: translateY(-50%);
+    right: 0;
+    top: 50%;
+    left: auto;
+    width: 3rem;
+    content: 'COPY';
+    position: absolute;
+    @mixin copybutton;
   }
 }

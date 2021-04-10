@@ -1,7 +1,6 @@
 @import '../../modules/breakpoints.css';
 @import '../../modules/variables.css';
 $iconsize: 1.125rem;
-
 $margin: 0.5rem;
 $cardsize: 7.5rem;
 .unit {
@@ -9,19 +8,105 @@ $cardsize: 7.5rem;
   transition: 0.3s all ease;
   position: relative;
   box-sizing: border-box;
-  display: block;
   border: none;
-  /* width: calc(50% - $margin); */
-  margin: 0 resolve($margin * 0.375) resolve($margin * 0.75) resolve($margin * 0.375);
   border-radius: $margin;
-  /* border: 1px solid color($primary a(25%)); */
-  flex-grow: 1;
   background-color: white;
-  width: calc(25% - resolve($margin * 2.375));
-  max-width: calc(25% - resolve($margin * 2.375));
+  margin-bottom: $margin;
   line-height: 1;
+  align-items: center;
+  flex-basis: 25%;
+  flex-basis: calc(25% - $margin);
+  margin-right: $margin;
+  display: grid;
+  justify-content: center;
+
+  &:nth-child(4n) {
+    margin-right: 0;
+  }
+  @mixin atX {
+    flex-basis: calc(20% - $margin);
+    &:nth-child(4n) {
+      margin-right: $margin;
+    }
+    &:nth-child(5n) {
+      margin-right: 0;
+    }
+  }
+  @mixin atSm {
+    /* flex-basis: calc(16.6667% - resolve($margin * 4/5)); */
+    flex-basis: calc(14.2857142857% - resolve($margin * 6/7));
+    &:nth-child(5n) {
+      margin-right: $margin;
+    }
+    &:nth-child(7n) {
+      margin-right: 0;
+    }
+  }
+  @mixin atSmmd {
+    /* flex-basis: calc(12.5% - resolve($margin * 7/8)); */
+    flex-basis: calc(11.111% - resolve($margin * 8/9));
+    &:nth-child(7n) {
+      margin-right: $margin;
+    }
+    &:nth-child(9n) {
+      margin-right: 0;
+    }
+  }
   @mixin atMd {
-    width: 30%;
+    /* flex-basis: calc(16.6667% - resolve($margin * 4/5)); */
+    flex-basis: calc(14.2857142857% - resolve($margin * 6/7));
+    &:nth-child(9n) {
+      margin-right: $margin;
+    }
+    &:nth-child(7n) {
+      margin-right: 0;
+    }
+  }
+  @mixin atLg {
+    flex-basis: calc(11.111% - resolve($margin * 8/9));
+    &:nth-child(7n) {
+      margin-right: $margin;
+    }
+    &:nth-child(9n) {
+      margin-right: 0;
+    }
+  }
+  @mixin atXl {
+    flex-basis: calc(8.3333333333% - resolve($margin * 11/12));
+    &:nth-child(9n) {
+      margin-right: $margin;
+    }
+    &:nth-child(12n) {
+      margin-right: 0;
+    }
+  }
+  :global .shownames :local & {
+    grid-template-columns: auto 1fr auto;
+    margin-right: $margin;
+    /* display: grid; */
+    flex-basis: 100%;
+
+    @mixin atMd {
+      flex-basis: calc(25% - $margin);
+      margin-right: $margin;
+      grid-template-columns: 1fr;
+    }
+    @mixin atLg {
+      flex-basis: calc(20% - $margin);
+      &:nth-child(4n) {
+        margin-right: $margin;
+      }
+    }
+  }
+  &:before {
+    width: 100%;
+  }
+  @mixin atMd {
+    grid-auto-flow: row;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    justify-items: center;
+    align-items: start;
   }
   &:after {
     :global .shownames :local & {
@@ -37,32 +122,12 @@ $cardsize: 7.5rem;
       }
     }
   }
-
-  /* max-width: calc(33.33% - resolve($margin * 2.5)); */
-  @mixin atX {
-    width: calc(20% - resolve($margin * 0.9375));
-    max-width: calc(20% - resolve($margin * 0.9375));
-  }
   &:hover {
     transition: 0.25s all ease;
     background-color: color($primary lightness(100%));
     box-shadow: 0 0.25rem 1.25rem color($primary a(50%));
   }
   :global .shownames :local & {
-    height: 4rem;
-    width: calc(100% - $margin);
-    min-width: calc(100% - $margin);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    @mixin atMd {
-      width: calc(16.665% - $margin);
-      max-width: calc(16.665% - $margin);
-    }
-    @mixin atLg {
-      width: calc(16.665% - $margin);
-      max-width: calc(16.665% - $margin);
-    }
   }
 }
 .bigletter {
@@ -70,6 +135,7 @@ $cardsize: 7.5rem;
   margin: 0;
   font-size: 3rem;
   line-height: 1;
+  height: 1.4375em;
   position: relative;
   padding: resolve($margin * 0.3125) 0 0;
   display: block;
@@ -85,8 +151,15 @@ $cardsize: 7.5rem;
   &:hover {
   }
   :global .shownames :local & {
-    width: 1.75em;
+    width: 1.3125em;
     padding-bottom: resolve($margin * 1.25);
+    margin-bottom: -0.0625em;
+    @mixin atSm {
+      width: 1.75em;
+    }
+    @mixin atMd {
+      margin-bottom: -0.1875em;
+    }
   }
 }
 .info {
@@ -98,6 +171,10 @@ $cardsize: 7.5rem;
   font-size: 0.75rem;
   line-height: 1.2;
   color: $primary-dark;
+  display: none;
+  :global .shownames :local & {
+    display: block;
+  }
 }
 .name,
 .entity {
@@ -115,16 +192,30 @@ $cardsize: 7.5rem;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: $fontsize1;
-  font-size: 1.0625rem;
-  font-weight: 600;
-  letter-spacing: -0.025em;
+  -webkit-line-clamp: 2;
+  p {
+    margin: 0;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: -0.015em;
+  }
   @mixin atSmmd {
-    -webkit-line-clamp: 2;
+  }
+  @mixin atMd {
+    -webkit-line-clamp: 3;
   }
   :global .shownames :local & {
-    display: block;
     width: 100%;
+    @mixin atMd {
+      p {
+        font-size: 0.88rem;
+        line-height: 1.25;
+        height: 2.2em;
+        font-weight: 500;
+        margin-bottom: resolve($margin * 0.75);
+      }
+      text-align: center;
+    }
   }
 }
 .entity {
@@ -163,21 +254,6 @@ $cardsize: 7.5rem;
 .name,
 .bigletter {
   cursor: pointer;
-  &:after {
-    transition: 1s opacity ease;
-    opacity: 0;
-    display: block;
-    position: absolute;
-    top: calc(50% - resolve($margin * 0.25));
-    width: $iconsize;
-    height: $iconsize;
-    right: resolve($margin - $iconsize * 0.125);
-    content: '';
-    transform: translateY(-50%);
-    background-repeat: no-repeat;
-    background-size: $iconsize $iconsize;
-    background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 35.063 35.063"><style type="text/css">.st0{fill:none;stroke:%23000000;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:10;}</style><polyline class="st0" points="25.536,7.515 29.536,7.515 29.536,30.941 5.527,30.941 5.527,7.515 9.527,7.515"/><rect x="13.027" y="4.122" class="st0" width="9.008" height="6.787"/></svg>');
-  }
   &:hover:after {
     transition: 0.5s opacity ease;
     opacity: 1;

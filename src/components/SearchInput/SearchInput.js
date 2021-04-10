@@ -4,9 +4,9 @@ import { unicodeNames, unicodeNumbers } from '../../unicode/UnicodeData'
 // import Pluralize from 'pluralize'
 import Fuse from 'fuse.js'
 
-function SearchInput({ query, isSplitSeries, onInputChange }) {
+function SearchInput({ query, onInputChange }) {
   const fuse = new Fuse(unicodeNames, {
-    minMatchCharLength: 3,
+    minMatchCharLength: 2,
     limit: 500,
     threshold: 0.18,
     includeScore: true
@@ -35,7 +35,7 @@ function SearchInput({ query, isSplitSeries, onInputChange }) {
     results = [...fuseresults, ...codePointMatch(newquery)]
     if (results.length) {
       resetCurrentPage()
-      appDispatch({ type: 'showsearchresults', results: results, query: newquery })
+      appDispatch({ type: 'showsearchresults', results: results.filter(i => i > 0), query: newquery })
     }
     return
   }

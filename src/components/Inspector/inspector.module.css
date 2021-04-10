@@ -57,6 +57,8 @@ $cardsize: 7.5rem;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 2rem;
+    padding: 0 4.5rem 0 0;
     @mixin atSmmd {
       -webkit-line-clamp: 3;
       height: 3em;
@@ -69,20 +71,31 @@ $cardsize: 7.5rem;
   &_entity {
     position: relative;
     line-height: 1;
+    font-family: Courier, 'Inter', monospace;
+    color: black;
+    text-align: left;
+    padding: $margin resolve($iconsize + $margin) $margin $margin;
+    margin: 0;
+    margin-top: resolve($margin * 0.25);
+
     &:before {
-      font-size: 80%;
-      content: 'HTML Entity';
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      content: attr(data-type);
       display: block;
       padding-bottom: 0.125rem;
-      color: $secondary;
+      color: rgba(0, 0, 0, 0.3);
     }
   }
   &_column {
     width: 100%;
     @mixin atMd {
-      width: 40%;
+      width: 100%;
       &:first-child {
-        width: 60%;
+        width: 100%;
       }
     }
   }
@@ -110,9 +123,9 @@ $cardsize: 7.5rem;
   &_entity,
   &_name,
   &_bigletter {
+    position: relative;
     cursor: pointer;
-    &:after {
-      /* clipboard */
+    /* &:after {
       transition: 1s opacity ease;
       content: '';
       opacity: 0;
@@ -126,11 +139,11 @@ $cardsize: 7.5rem;
       background-repeat: no-repeat;
       background-size: $iconsize $iconsize;
       background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 35.063 35.063"><style type="text/css">.st0{fill:none;stroke:%23000000;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:10;}</style><polyline class="st0" points="25.536,7.515 29.536,7.515 29.536,30.941 5.527,30.941 5.527,7.515 9.527,7.515"/><rect x="13.027" y="4.122" class="st0" width="9.008" height="6.787"/></svg>');
-    }
-    &:hover:after {
+    } */
+    /* &:hover:after {
       transition: 0.5s opacity ease;
       opacity: 1;
-    }
+    } */
   }
   &_closebutton {
     z-index: 1;
@@ -141,7 +154,10 @@ $cardsize: 7.5rem;
     right: $margin;
     width: $closex;
     height: $closex;
-    display: block;
+    display: none;
+    @mixin atMd {
+      display: block;
+    }
     &:hover::before,
     &:hover::after {
       background-color: black;
@@ -185,7 +201,9 @@ $cardsize: 7.5rem;
     opacity: 1;
   }
 }
-
+:global .pseudocopybutton {
+  @mixin pseudocopybutton;
+}
 :global .copiedactive {
   transform: translateY(100%);
   animation: float 1.125s normal forwards ease;

@@ -5,14 +5,14 @@ function ourReducer(draft, action) {
       draft.results = action.results
       draft.query = action.query
       return
-    case 'splitseries':
-      draft.isSplitSeries = action.value
-      return
     case 'defaultmodeupdate':
       draft.defaultedsearch = action.value
       return
     case 'queryupdate':
       draft.query = action.value
+      return
+    case 'flashMessage':
+      draft.flashMessages.push(action.value)
       return
     case 'openinspector':
       draft.inspectorOpen = action.inspectoropen

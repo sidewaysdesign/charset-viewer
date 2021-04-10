@@ -7,10 +7,12 @@
   align-items: center;
   flex-direction: row;
   position: relative;
-  padding: 0.5rem $margin;
+  padding: 0;
   margin-bottom: $margin;
-  z-index: 3;
+  width: 200%;
+  height: 2rem;
   @mixin atMd {
+    width: 100%;
     &::before {
       content: 'Glyphs';
       font-weight: 600;
@@ -22,17 +24,14 @@
   }
 }
 .toggle {
-  line-height: 1;
-  position: relative;
+  @mixin controlText;
+  height: 100%;
   color: color(white a(50%));
-  font-weight: 600;
-  font-size: $fontsize0;
-  text-transform: uppercase;
   span {
     @mixin toggleIcon;
   }
 }
-.active {
+:global .active {
   color: white;
   span {
     @mixin toggleIconActive;

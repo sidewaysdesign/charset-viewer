@@ -38,7 +38,7 @@ function GlyphCard({ item, inspectoropen }) {
         <div className={`${styles.name}${copiedEntity.copied ? ' copied' : ''}`} text={processedName} onCopy={() => copyClipHandler()}>
           <p>{processedName}</p>
         </div>
-        {copiedEntity.copied ? <div className={`${styles.copied} copiedactive`}>Copied</div> : null}
+        {/* {copiedEntity.copied ? <div className={`${styles.copied} copiedactive`}>Copied</div> : null} */}
       </div>
     </li>
   )

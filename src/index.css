@@ -1,6 +1,7 @@
 @import './modules/variables.css';
 @import './modules/breakpoints.css';
 @import './modules/fonts.css';
+
 $overset: resolve($margin * 1);
 
 body {
@@ -24,28 +25,34 @@ p {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
 .App {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  max-height: 100vh;
   box-sizing: border-box;
   padding: $margin;
   align-items: stretch;
-
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
   @mixin atMd {
-    display: block;
-    height: auto;
   }
 }
+.App > * {
+}
 footer {
-  padding: $margin 0 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  color: white;
-  font-weight: 500;
-  font-size: 0.75rem;
+  a {
+    padding: $margin 0 0;
+    font-weight: 500;
+    font-size: 0.75rem;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    color: white;
+    text-decoration: none;
+    span {
+    }
+  }
 }
 .outputContainer {
   display: flex;
@@ -56,11 +63,12 @@ footer {
   flex-direction: row;
   flex-wrap: nowrap;
   position: relative;
+  align-items: stretch;
   @mixin atMd {
     display: flex;
     flex-direction: row;
     width: 100%;
-    outline: 3px solid color(pink a(40%));
+    /* outline: 3px solid color(pink a(40%)); */
     min-height: 500px;
   }
 }
@@ -84,48 +92,55 @@ footer {
   display: flex;
   flex-basis: 100%;
   @mixin atMd {
-    height: auto;
+    /* height: auto; */
     position: relative;
     flex-basis: 60%;
   }
 }
 .glyphcardContainer {
-  overflow: hidden;
+  /* overflow: hidden; */
   /* height: 100%; */
   align-items: flex-start;
   @mixin atMd {
     /* margin-right: $margin; */
     /* height: auto; */
     /* max-width: 900px; */
-    width: 60%;
-    flex-basis: 65%;
+    width: 65%;
+    flex-basis: 75%;
     margin-right: $margin;
   }
+  @mixin atLg {
+    width: 75%;
+    flex-basis: 65%;
+  }
   .showentities & {
-    border: 12px red;
     opacity: 0;
-    z-index: -1;
+    /* z-index: -1; */
+    @mixin atMd {
+      opacity: 1;
+      /* z-index: 0; */
+    }
   }
 }
 .entityContainer {
-  display: flex;
-  opacity: 0.2;
+  display: grid;
+  opacity: 0;
   z-index: -1;
   position: relative;
-  flex-direction: column;
+  /* flex-direction: column; */
   color: white;
-
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
   @mixin atMd {
     margin-left: $margin;
     align-items: flex-start;
     justify-content: flex-start;
-    /* margin-left: $margin; */
-    /* width: 40%; */
     opacity: 1;
     flex-wrap: wrap;
     width: 40%;
     align-items: flex-start;
     flex-basis: 35%;
+    z-index: 0;
   }
   .showentities & {
     opacity: 1;
@@ -133,19 +148,13 @@ footer {
   }
 }
 .glyphPanelUnit {
-  flex: 0 0 50%;
-  min-height: 0;
-  z-index: 0;
+  /* z-index: 0; */
   position: relative;
   &:first-child {
     transition: $transitionpanelshift;
-    /* overflow: auto; */
-    /* align-items: stretch; */
   }
   @mixin atMd {
     &:first-child {
-      position: relative;
-      flex: 0 0 100%;
     }
   }
 
@@ -166,7 +175,7 @@ footer {
         opacity: 1;
         left: 0;
         top: 0;
-        z-index: 2;
+        /* z-index: 99; */
         @mixin atMd {
           content: '';
         }
@@ -179,7 +188,7 @@ footer {
   position: relative;
   height: auto;
   align-items: flex-start;
-  z-index: 2;
+  z-index: 100;
   width: 100%;
   height: 100%;
   flex-basis: 1 1 auto;
@@ -214,26 +223,23 @@ footer {
 }
 .glyphcardList {
   box-sizing: border-box;
-  position: relative;
-  display: flex;
-  flex: 0 1 auto;
-  flex-direction: row;
-  flex-wrap: wrap;
-  flex-basis: 1;
+  position: absolute;
   padding: 0 resolve($margin * 0.25) 0 0;
-  overflow-y: auto;
-  align-items: flex-start;
-  justify-content: flex-start;
-  /* align-self: stretch; */
-  min-height: 0;
+  overflow: auto;
   height: 100%;
-  /* min-height: 100%; */
+  width: 100%;
+  display: flex;
+  align-content: start;
+  grid-template-columns: 100%;
+  flex-wrap: wrap;
+  flex: 1;
+  justify-content: flex-start;
   margin: 0;
-  @mixin atMd {
+  @mixin atLg {
     padding: 0 resolve($margin * 0.5) 0 0;
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
   }
   /* height: calc(100% + $overset); */
-
   /* margin-top: -$overset; */
   /* outline: 2px solid red; */
   /* padding-top: $overset; */
@@ -242,13 +248,15 @@ footer {
   &:empty {
     &::before {
       position: absolute;
+      width: 100%;
+      text-align: center;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       color: white;
       opacity: 0.5;
       font-size: 2rem;
-      content: 'No current results';
+      content: 'No current results. Enter a search phrase or special characters above.';
     }
   }
   &:last-child:after {
@@ -259,29 +267,116 @@ footer {
 }
 
 .glyphPanelContainer {
+  display: grid;
   position: relative;
-  display: flex;
   width: 200%;
-  flex-direction: row;
+  /* flex-direction: row; */
   max-height: 100%;
-  height: auto;
-  /* align-items: stretch; */
+  min-height: 100%;
+  /* height: auto; */
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
   @mixin atMd {
-    display: block;
-    width: 100%;
+    /* display: block; */
+    /* width: 100%
+    ; */
+  }
+  .inspectoropen & {
+    z-index: 100;
   }
 }
 .glyphcardWrapper {
   transition: $transitionpanelshift;
-  height: 100%;
+  /* height: 100%; */
   width: 100%;
-  max-height: 100%;
-  overflow: visible;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  /* max-height: 100%; */
+  /* overflow: visible; */
   position: relative;
   &.inspectoropen {
     transform: translateX(-100%);
     @mixin atMd {
       transform: none;
     }
+  }
+}
+.inspectorBackButton {
+  padding: 0;
+  @mixin controlText;
+  width: 50%;
+  color: white;
+  text-align: left;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: $margin;
+  &::before {
+    /* bottom: -1.125ex; */
+    position: relative;
+    content: '';
+    margin-right: 0.3em;
+    background: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 15 20"><style type="text/css">.a1{fill:none;stroke:%23ffffff;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:10;}</style><line class="a1" x1="2.5" y1="10" x2="15" y2="10"/><polyline class="a1" points="7.5,5 2.5,10 7.5,15"/></svg>') no-repeat center center;
+    background-size: contain;
+    width: 1rem;
+    height: 1.5rem;
+    /* background-color: pink; */
+    display: inline-block;
+    margin-right: $margin;
+  }
+  @mixin atMd {
+    display: none;
+  }
+}
+.swdLink {
+  span {
+    color: rgba(255, 255, 255, 0.75);
+    transition: 0.15s all ease;
+  }
+  &:hover {
+    transition: 0.3s all ease;
+    span {
+      color: white;
+      .infinity__mark {
+        transition: 0.3s fill ease;
+        fill: white;
+      }
+    }
+  }
+}
+.infinity {
+  /* background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="52.158" height="18.402" viewBox="0 0 52.158 18.402"><defs><style>.a{fill:%23d84a0e;}</style></defs><path class="a" d="M51.679,6.41C50.546,2.677,47.39.517,43.14.282a22.465,22.465,0,0,0-14.713,4.19,62.958,62.958,0,0,0-4.912,4.851A16.187,16.187,0,0,1,13.272,13.5c-2.661.144-6.866-.205-7.262-3.581A4.84,4.84,0,0,1,7.41,5.8C9.942,3.65,15.075,4.137,18.063,4.92c.152.038.89.243,1.376.388a.557.557,0,0,0,.6-.205l.327-.433a.551.551,0,0,0-.023-.7,8.345,8.345,0,0,0-1.65-1.506C14.352-.441,5.38-1.444,1.745,3.566-1.175,7.6-.939,14.615,3.874,17.147a10.588,10.588,0,0,0,4.768,1.285,22.028,22.028,0,0,0,13.223-3.939,24.29,24.29,0,0,0,3.6-3,26.124,26.124,0,0,1,4.768-4.327A15.1,15.1,0,0,1,41.566,5.14c.829.221,2.829,1.163,3.277,2.973.487,1.939-1.08,4.076-2.722,4.988a8.738,8.738,0,0,1-4.912.7c-1.65-.091-3.262-.5-4.889-.753a1.05,1.05,0,0,0-.16,0,.431.431,0,0,0-.281.19c-.342.532-.738,1.027-.038,1.521a18.4,18.4,0,0,0,6.783,2.981c3.581.768,7.55.494,10.349-2.015A9.591,9.591,0,0,0,51.679,6.41Z" transform="translate(0.159 -0.047)"/></svg>') no-repeat center center; */
+  /* background-size: contain; */
+  svg {
+    width: 2.875rem;
+  }
+  .infinity__mark {
+    fill: #d84a0e;
+  }
+}
+
+/* prettier-ignore */
+@keyframes flashAlertAnim {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) scale(1.2);
+  }
+  30% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+  }
+  75% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateX(-50%) scale(1.2);
   }
 }
