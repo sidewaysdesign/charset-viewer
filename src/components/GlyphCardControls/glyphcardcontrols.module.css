@@ -22,6 +22,9 @@
       line-height: 1;
     }
   }
+  & > button:first-child {
+    margin-left: 0;
+  }
 }
 .toggle {
   @mixin controlText;

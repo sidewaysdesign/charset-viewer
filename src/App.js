@@ -13,15 +13,21 @@ import EntityPanel from './components/EntityPanel/EntityPanel'
 import FlashAlerts from './components/FlashAlerts/FlashAlerts'
 import Footer from './components/Footer/Footer'
 
-// import { useParams } from 'react-router'
-
 import { useImmerReducer } from 'use-immer'
 import './App.css'
+
+/* DONE: national flags with glyph */
+/* TODO: national flags by name search */
+/* TODO: prevent re-renders on inspector copy */
+/* TODO: add lightweight categories to search (e.g. fruits, sports) */
+/* TODO: improve branding/theming */
+/* TODO: HTML entities, numbered glyphs results (no %) */
+/* TODO: entities fix nonwrapping string  */
+/* TODO: “load more” for long result lists  */
 
 const Entities = require('html-entities').AllHtmlEntities
 const initialResultsPerPage = 200
 const useStateWithLocalStorage = (localStorageKey, defaultValue) => {
-  // console.log('localStorage.getItem(localStorageKey) ', localStorageKey, localStorage.getItem(localStorageKey))
   const [value, setValue] = useState(localStorage.getItem(localStorageKey) || defaultValue)
   localStorage.setItem(localStorageKey, value)
   return [value, setValue]
@@ -43,10 +49,7 @@ function App() {
   const toggleHandler = state => {
     setGlyphnameToggle(state === 'shownames' ? 'hidenames' : 'shownames')
   }
-  const entityHandler = xstate => {
-    console.log('x', state.entityType)
-    setEntityType(xstate)
-  }
+  const entityHandler = state => setEntityType(state)
   const [uiStorage, setUiStorage] = useState(
     JSON.parse(localStorage.getItem('uiStorage')) || {
       glyphs: true,
@@ -57,47 +60,48 @@ function App() {
   useEffect(() => {
     localStorage.setItem('uiStorage', JSON.stringify(uiStorage))
   }, [uiStorage])
-  const validResults = item => {
-    // return false
-    return item !== undefined && item.length
-  }
+  const validResults = item => item !== undefined && item.length
   const [state, dispatch] = useImmerReducer(ourReducer, originalState)
   function rangeHandler(results) {
     const rangeStart = resultsPerPage * currentPage
     const rangeEnd = rangeStart + resultsPerPage
+    // console.log('rangeHandler', [...results.slice(rangeStart, rangeEnd)])
     return [...results.slice(rangeStart, rangeEnd)]
   }
   const hasQuery = state.query && state.query.length
   return (
-    <StateContext.Provider value={state}>
-      <DispatchContext.Provider value={dispatch}>
-        <div className="App">
-          <header>
-            <h1>GlyphWorks</h1>
-            <div className="inputContainer">
-              <SearchInput placeholder="Input chracters or search names" onInputChange={setCurrentPage} />
-            </div>
-          </header>
-          <ModeToggle mode={modeToggle} modeHandler={modeHandler} />
-          <div className={`outputContainer${modeToggle === 'entities' ? ' showentities' : ''}`}>
-            <div className="glyphcardContainer">
-              <div className={`glyphcardWrapper${state.inspectorOpen ? ' inspectoropen' : ''}`}>
-                <GlyphNamesToggle toggle={glyphnameToggle} toggleHandler={toggleHandler} />
-                <div className="glyphPanelContainer">
-                  <div className="glyphPanelUnit">
-                    <ul className={`glyphcardList${glyphnameToggle ? ' shownames' : ''}`}>{hasQuery && validResults(state.results) ? rangeHandler(state.results).map((item, index) => <GlyphCard item={unicodeData[item]} key={index} inspectoropen={state.inspectorOpen} />) : null}</ul>
+    <>
+      <StateContext.Provider value={state}>
+        <DispatchContext.Provider value={dispatch}>
+          <div className="App">
+            <header>
+              <h1>GlyphWorks</h1>
+              <div className="inputContainer">
+                <SearchInput placeholder="Input characters or search names" onInputChange={setCurrentPage} />
+              </div>
+            </header>
+            <ModeToggle mode={modeToggle} modeHandler={modeHandler} />
+            <div className={`outputContainer${modeToggle === 'entities' ? ' showentities' : ''}`}>
+              <div className="glyphcardContainer">
+                <div className={`glyphcardWrapper${state.inspectorOpen ? ' inspectoropen' : ''}`}>
+                  <GlyphNamesToggle toggle={glyphnameToggle} toggleHandler={toggleHandler} />
+                  <div className="glyphPanelContainer">
+                    <div className="glyphPanelUnit">
+                      {/* {console.log('state.results', state.results)} */}
+                      <ul className={`glyphcardList${glyphnameToggle === 'shownames' ? ' shownames' : ''}`}>{hasQuery && validResults(state.results) ? rangeHandler(state.results).map((item, index) => <GlyphCard item={item} key={index} inspectoropen={state.inspectorOpen} />) : null}</ul>
+                    </div>
+                    <div className="glyphPanelUnit">{state.inspectorOpen && state.inspectorData ? <Inspector data={state.inspectorData} /> : ''}</div>
                   </div>
-                  <div className="glyphPanelUnit">{state.inspectorOpen && state.inspectorIndex ? <Inspector index={state.inspectorIndex} /> : ''}</div>
                 </div>
               </div>
+              <EntityPanel query={state.query} entityType={entityType} entityHandler={entityHandler} />
             </div>
-            <EntityPanel query={state.query} entityType={entityType} entityHandler={entityHandler} />
+            <Footer />
           </div>
-          <Footer />
-          <FlashAlerts messages={state.flashMessages} />
-        </div>
-      </DispatchContext.Provider>
-    </StateContext.Provider>
+        </DispatchContext.Provider>
+        <FlashAlerts messages={state.flashMessages} />
+      </StateContext.Provider>
+    </>
   )
 }
 

@@ -9,16 +9,15 @@ const Entities = require('html-entities').AllHtmlEntities
 function EntityPanel({ query, entityType, entityHandler }) {
   const appDispatch = useContext(DispatchContext)
   const options = [
-    { value: 'urlescape', label: 'URL Escape Codes' },
-    { value: 'htmlentities', label: 'HTML Entities' }
+    { value: 'htmlentities', label: 'HTML Entities' },
+    { value: 'urlescape', label: 'URL Escape Codes' }
   ]
-  const defaultOption = options[0]
-  const selectHandler = ({ value }) => {
-    entityHandler(value)
-  }
-  const copyFlashHandler = msg => {
-    appDispatch({ type: 'flashMessage', value: `${msg} copied` })
-  }
+
+  let defaultOption = options[options.findIndex(p => p.value === entityType)]
+  const selectHandler = ({ value }) => entityHandler(value)
+
+  const copyFlashHandler = msg => appDispatch({ type: 'flashMessage', value: `${msg} copied` })
+
   function RenderEntityFields({ query, type }) {
     let entitystring = ''
     let copymessage = ''
@@ -26,12 +25,12 @@ function EntityPanel({ query, entityType, entityHandler }) {
       case 'urlescape':
         entitystring = encodeURI(query)
         copymessage = 'URL escape codes'
-        break
-      case 'htmlentities':
-        entitystring = encodeURI(Entities.encode(query))
-        copymessage = 'HTML entities'
+        defaultOption = options[1]
         break
       default:
+        entitystring = encodeURI(Entities.encode(query))
+        copymessage = 'HTML entities'
+        defaultOption = options[0]
     }
     return (
       <>
@@ -53,7 +52,9 @@ function EntityPanel({ query, entityType, entityHandler }) {
           <RenderEntityFields query={query} type={entityType} />
         </div>
       ) : (
-        ''
+        <>
+          <p className={styles.nothing}>No results</p>
+        </>
       )}
     </div>
   )

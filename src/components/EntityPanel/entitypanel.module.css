@@ -43,6 +43,7 @@
 
 :global .copybutton {
   width: 100%;
+  max-width: 8rem;
   margin-top: $margin;
   @mixin copybutton;
 }

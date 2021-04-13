@@ -9,7 +9,11 @@ function GlyphCardControls({ toggle, toggleHandler }) {
   }
   return (
     <div className={styles.container}>
-      <button className={`${styles.toggle} ${toggle === 'shownames' || toggle === true ? 'active' : ''}`} onClick={() => toggleHandler(toggle)}>
+      <button
+        className={`${styles.toggle} ${toggle === 'shownames' || toggle === true ? 'active' : ''}`}
+        onClick={() => {
+          return toggleHandler(toggle)
+        }}>
         Show names<span></span>
       </button>
       <button className="inspectorBackButton" onClick={() => closeHandler()}>

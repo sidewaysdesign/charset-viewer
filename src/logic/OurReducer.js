@@ -16,7 +16,7 @@ function ourReducer(draft, action) {
       return
     case 'openinspector':
       draft.inspectorOpen = action.inspectoropen
-      draft.inspectorIndex = action.index
+      draft.inspectorData = action.data
       return
     case 'closeinspector':
       draft.inspectorOpen = action.inspectoropen

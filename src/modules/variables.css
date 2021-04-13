@@ -6,15 +6,17 @@ $bright1: #b047de;
 $bright2: #33b3e2;
 $muted1: #cbebf7;
 $muted2: #ebd0f6;
-$margin: 0.5rem;
+$margin: 0.75rem;
+$margin-panel: resolve($margin * 1.5);
+$margin-layout: resolve($margin * 2);
 $grey: #707070;
 $charcoal: #4a4a4a;
 $mist: #dfdfdf;
 $storm: color(#e0e7e9 tint(40%));
-
 $fontsize0: 0.82rem;
 $fontsize1: 0.9375rem;
 $fontsize2: 1.5rem;
+
 /* $transitionpanelshift: 1s margin-left ease; */
 $transitionpanelshift: 0.5s transform ease;
 $ramp: linear-gradient(90deg, $bright1, $bright2);

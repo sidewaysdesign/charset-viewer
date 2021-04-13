@@ -131,7 +131,7 @@ $cardsize: 7.5rem;
   }
 }
 .bigletter {
-  z-index: 1;
+  /* z-index: 1; */
   margin: 0;
   font-size: 3rem;
   line-height: 1;
