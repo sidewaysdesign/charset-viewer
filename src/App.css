@@ -44,19 +44,21 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-
   @mixin atMd {
     flex-direction: row;
   }
   h1 {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
-    font-size: 1.6875rem;
+    font-size: 1.1875rem;
     letter-spacing: -0.015em;
     color: white;
     flex-basis: 100%;
     text-align: center;
     margin: 0;
+    @mixin atX {
+      font-size: 1.6875rem;
+    }
     @mixin atMd {
       text-align: left;
       font-size: 3rem;
@@ -89,14 +91,23 @@ header {
   /* text-align: center; */
   font-weight: 300;
   box-sizing: border-box;
-  padding: 1rem;
+  padding: resolve($margin);
   width: 100%;
   margin-left: auto;
   margin-right: auto;
   min-height: 100vh;
   max-width: 960px;
   transition: 0.3s all ease;
+  @mixin atX {
+    padding: $margin resolve($margin * 2);
+  }
+  @mixin atLg {
+    max-width: calc(100vw - resolve($margin * 2));
+  }
   @mixin atXl {
     max-width: 1200px;
+  }
+  @mixin atXxl {
+    padding: $margin 0;
   }
 }

@@ -1,7 +1,7 @@
 @import '../../modules/breakpoints.css';
 @import '../../modules/variables.css';
 $closex: 2rem;
-$charSize: 8rem;
+$charSize: 7.75rem;
 $iconsize: 1.125rem;
 
 $margin: 0.5rem;
@@ -14,13 +14,23 @@ $cardsize: 7.5rem;
     display: block;
     border: none;
     height: auto;
-    padding: resolve($margin * 2);
+    padding: resolve($margin * 1);
     flex-grow: 1;
+    @mixin atX {
+      padding: resolve($margin * 2);
+    }
+    @mixin atSm {
+      padding: resolve($margin * 2);
+    }
+    @mixin atSmmd {
+      padding: resolve($margin * 3);
+    }
   }
-  &_bigletter {
+  &_bigglyph {
     z-index: 1;
     margin: 0;
-    font-size: $charSize;
+    font-size: resolve($charSize * 0.625);
+    height: resolve($charSize * 0.625);
     line-height: 1;
     padding: 0;
     display: block;
@@ -28,8 +38,13 @@ $cardsize: 7.5rem;
     text-align: left;
     top: 0.5rem;
     width: 100%;
-    height: $charSize;
+    margin-bottom: resolve($margin * 2);
     font-family: 'Inter Bold', 'apple color emoji', 'segoe ui emoji', 'noto color emoji', notocoloremoji, 'segoe ui symbol', 'android emoji', emojisymbols, 'emojione mozilla', 'twemoji mozilla', 'segoe ui symbol', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+    @mixin atX {
+      margin-bottom: resolve($margin * 4);
+      font-size: $charSize;
+      height: $charSize;
+    }
   }
   &_info {
     box-sizing: border-box;
@@ -51,17 +66,23 @@ $cardsize: 7.5rem;
   }
   &_name {
     display: block;
+    display: grid;
+    align-content: center;
     position: relative;
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 2rem;
-    padding: 0 4.5rem 0 0;
+    font-size: 1.25rem;
+    padding: 0 2rem 0 0;
+    margin: $margin 0;
+    @mixin atX {
+      padding: 0 4.625rem 0 0;
+      font-size: 1.75rem;
+    }
     @mixin atSmmd {
       -webkit-line-clamp: 3;
-      height: 3em;
       max-height: 3em;
     }
     @mixin atLg {
@@ -74,20 +95,30 @@ $cardsize: 7.5rem;
     font-family: Courier, 'Inter', monospace;
     color: black;
     text-align: left;
-    padding: $margin resolve($iconsize + $margin) $margin $margin;
     margin: 0;
     margin-top: resolve($margin * 0.25);
+    padding: $margin resolve($iconsize + resolve($margin * 0.5)) resolve($margin * 0.5) 0;
+    font-size: 1.25rem;
+    @mixin atX {
+      font-size: inherit;
+      padding: $margin resolve($iconsize + $margin) $margin 0;
+    }
 
     &:before {
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       font-weight: 600;
       font-family: 'Inter', sans-serif;
       content: attr(data-type);
       display: block;
-      padding-bottom: 0.125rem;
       color: rgba(0, 0, 0, 0.3);
+      font-size: 0.7rem;
+      padding-bottom: 0;
+      @mixin atX {
+        letter-spacing: 0.1em;
+        font-size: 0.75rem;
+        padding-bottom: 0.125rem;
+      }
     }
   }
   &_column {
@@ -122,28 +153,9 @@ $cardsize: 7.5rem;
   }
   &_entity,
   &_name,
-  &_bigletter {
+  &_bigglyph {
     position: relative;
     cursor: pointer;
-    /* &:after {
-      transition: 1s opacity ease;
-      content: '';
-      opacity: 0;
-      display: block;
-      position: absolute;
-      top: calc(50% - resolve($margin * 0.25));
-      width: $iconsize;
-      height: $iconsize;
-      right: resolve($margin - $iconsize * 0.125);
-      transform: translateY(-50%);
-      background-repeat: no-repeat;
-      background-size: $iconsize $iconsize;
-      background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 35.063 35.063"><style type="text/css">.st0{fill:none;stroke:%23000000;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:10;}</style><polyline class="st0" points="25.536,7.515 29.536,7.515 29.536,30.941 5.527,30.941 5.527,7.515 9.527,7.515"/><rect x="13.027" y="4.122" class="st0" width="9.008" height="6.787"/></svg>');
-    } */
-    /* &:hover:after {
-      transition: 0.5s opacity ease;
-      opacity: 1;
-    } */
   }
   &_closebutton {
     z-index: 1;
@@ -167,7 +179,6 @@ $cardsize: 7.5rem;
       content: '';
       width: $closex;
       height: 2px;
-
       background-color: $grey;
       transform-origin: center;
       position: absolute;
@@ -182,7 +193,7 @@ $cardsize: 7.5rem;
     }
   }
 }
-.sideborder {
+:global .sideborder {
   span {
     background-clip: padding-box;
     padding: 0;

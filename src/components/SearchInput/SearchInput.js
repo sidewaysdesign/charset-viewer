@@ -7,7 +7,7 @@ import { flagSet } from '../../logic/MultiCodePoints'
 // import Pluralize from 'pluralize'
 import Fuse from 'fuse.js'
 
-function SearchInput({ query, onInputChange }) {
+function SearchInput({ query, onInputChange, placeholder }) {
   const searchAccuracy = 0.18
   const fuseMain = useMemo(() => {
     return new Fuse(unicodeNames, {
@@ -55,20 +55,8 @@ function SearchInput({ query, onInputChange }) {
       allFlags.forEach(glyph => collection.push(Array.from(glyph).map(i => i.codePointAt())))
       return collection
     }
-
-    //     const flagResults = q => {
-    //   const flagRegex = /[\uD83C][\uDDE6-\uDDFF][\uD83C][\uDDE6-\uDDFF]/g
-    //   const allFlags = q.match(flagRegex)
-    //   if (!allFlags) return []
-    //   const flagResults = []
-    //   allFlags.forEach(glyph => flagResults.push(Array.from(glyph).map(i => i.codePointAt())))
-    //   return flagResults
-    // }
-
     const flagWordSearch = fuseFlags.search(newquery).map(x => x.item.sequence)
-    results = [...fuseMainResults, ...flagGlyphSearch(newquery), ...new Set(codePointMatch(newquery))]
-    console.log('RESULTS?')
-    console.table(results)
+    results = [...fuseMainResults, ...flagWordSearch, ...flagGlyphSearch(newquery), ...new Set(codePointMatch(newquery))]
     if (results.length) {
       resetCurrentPage()
       appDispatch({ type: 'showsearchresults', results: results.filter(i => i > 0 || typeof i === 'object'), query: newquery })
@@ -76,7 +64,7 @@ function SearchInput({ query, onInputChange }) {
     return
   }
 
-  return <DebouncedInput value={newquery} onDebouncedValChange={e => handleFieldChange(e)} delay={10} />
+  return <DebouncedInput placeholder={placeholder} value={newquery} onDebouncedValChange={e => handleFieldChange(e)} delay={10} />
 }
 
 export default SearchInput

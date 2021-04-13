@@ -130,7 +130,7 @@ $cardsize: 7.5rem;
   :global .shownames :local & {
   }
 }
-.bigletter {
+.bigglyph {
   /* z-index: 1; */
   margin: 0;
   font-size: 3rem;
@@ -252,7 +252,7 @@ $cardsize: 7.5rem;
 }
 .entity,
 .name,
-.bigletter {
+.bigglyph {
   cursor: pointer;
   &:hover:after {
     transition: 0.5s opacity ease;

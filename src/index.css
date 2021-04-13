@@ -31,10 +31,13 @@ code {
   flex-direction: column;
   height: 100vh;
   box-sizing: border-box;
-  padding: $margin;
   align-items: stretch;
   display: grid;
   grid-template-rows: auto auto 1fr auto;
+  padding: resolve($margin * 0.5);
+  @mixin atX {
+    padding: $margin;
+  }
   @mixin atMd {
   }
 }
@@ -42,7 +45,6 @@ code {
 }
 footer {
   a {
-    padding: $margin 0 0;
     font-weight: 500;
     font-size: 0.75rem;
     justify-content: space-between;
@@ -50,6 +52,10 @@ footer {
     flex-direction: row;
     color: white;
     text-decoration: none;
+    padding: resolve($margin * 0.75) 0 0;
+    @mixin atX {
+      padding: $margin 0 0;
+    }
     span {
     }
   }
@@ -214,12 +220,20 @@ footer {
 .glyphcardList::-webkit-scrollbar-track {
   background: color(white a(50%));
   border-radius: 0.25rem;
+  transition: 0.3s all ease;
+  .inspectoropen & {
+    background: transparent;
+  }
 }
 
 /* Handle */
 .glyphcardList::-webkit-scrollbar-thumb {
   background: white;
   border-radius: 0.2rem;
+  transition: 0.3s all ease;
+  .inspectoropen & {
+    background: transparent;
+  }
 }
 .glyphcardList {
   box-sizing: border-box;
@@ -247,16 +261,8 @@ footer {
   /* mask-image: linear-gradient(to bottom, transparent 0, black $overset, black calc(100% - resolve($overset * 6)), transparent 100%); */
   &:empty {
     &::before {
-      position: absolute;
-      width: 100%;
-      text-align: center;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: white;
-      opacity: 0.5;
-      font-size: 2rem;
-      content: 'No current results. Enter a search phrase or special characters above.';
+      @mixin emptymessage;
+      content: 'No current results.';
     }
   }
   &:last-child:after {
@@ -312,18 +318,32 @@ footer {
   display: flex;
   align-items: center;
   padding-left: $margin;
+  font-size: 0.75rem;
+  transform: translateX(resolve($margin * 1.5));
+  @mixin atX {
+    transform: translateX(resolve($margin * 0.5));
+    .inspectoropen & {
+      transform: translateX(resolve(-$margin * 0.5));
+      /* transform: none; */
+    }
+    font-size: 0.82rem;
+  }
   &::before {
     /* bottom: -1.125ex; */
     position: relative;
     content: '';
-    margin-right: 0.3em;
     background: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 15 20"><style type="text/css">.a1{fill:none;stroke:%23ffffff;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:10;}</style><line class="a1" x1="2.5" y1="10" x2="15" y2="10"/><polyline class="a1" points="7.5,5 2.5,10 7.5,15"/></svg>') no-repeat center center;
     background-size: contain;
     width: 1rem;
-    height: 1.5rem;
+    height: 1.125rem;
     /* background-color: pink; */
     display: inline-block;
-    margin-right: $margin;
+    margin-right: resolve($margin * 0.625);
+    @mixin atX {
+      /* margin-right: $margin; */
+      width: 1rem;
+      height: 1.5rem;
+    }
   }
   @mixin atMd {
     display: none;

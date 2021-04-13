@@ -10,7 +10,10 @@
   padding: 0;
   margin-bottom: $margin;
   width: 200%;
-  height: 2rem;
+  height: 1rem;
+  @mixin atTn {
+    height: 2rem;
+  }
   @mixin atMd {
     width: 100%;
     &::before {

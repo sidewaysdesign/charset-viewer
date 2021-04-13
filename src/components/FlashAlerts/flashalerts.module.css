@@ -10,11 +10,15 @@
   font-weight: 500;
   top: 50%;
   left: 50%;
-  padding: 1rem 2rem;
   transform: translateX(-50%);
   opacity: 1;
   background: $ramp no-repeat;
   animation: flashAlertAnim cubic-bezier(0.48, 0.04, 0.56, 1.02) 1.25s forwards;
+  text-align: center;
+  padding: 0.5rem 0.75rem;
+  @mixin atSm {
+    padding: 1rem 2rem;
+  }
   span {
     font-weight: 600;
   }

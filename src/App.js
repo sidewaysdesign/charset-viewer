@@ -16,13 +16,11 @@ import Footer from './components/Footer/Footer'
 import { useImmerReducer } from 'use-immer'
 import './App.css'
 
-/* DONE: national flags with glyph */
-/* TODO: national flags by name search */
+/* TODO: set focus on input */
 /* TODO: prevent re-renders on inspector copy */
 /* TODO: add lightweight categories to search (e.g. fruits, sports) */
 /* TODO: improve branding/theming */
 /* TODO: HTML entities, numbered glyphs results (no %) */
-/* TODO: entities fix nonwrapping string  */
 /* TODO: “load more” for long result lists  */
 
 const Entities = require('html-entities').AllHtmlEntities
@@ -65,7 +63,6 @@ function App() {
   function rangeHandler(results) {
     const rangeStart = resultsPerPage * currentPage
     const rangeEnd = rangeStart + resultsPerPage
-    // console.log('rangeHandler', [...results.slice(rangeStart, rangeEnd)])
     return [...results.slice(rangeStart, rangeEnd)]
   }
   const hasQuery = state.query && state.query.length
@@ -77,7 +74,7 @@ function App() {
             <header>
               <h1>GlyphWorks</h1>
               <div className="inputContainer">
-                <SearchInput placeholder="Input characters or search names" onInputChange={setCurrentPage} />
+                <SearchInput onInputChange={setCurrentPage} />
               </div>
             </header>
             <ModeToggle mode={modeToggle} modeHandler={modeHandler} />
@@ -87,7 +84,6 @@ function App() {
                   <GlyphNamesToggle toggle={glyphnameToggle} toggleHandler={toggleHandler} />
                   <div className="glyphPanelContainer">
                     <div className="glyphPanelUnit">
-                      {/* {console.log('state.results', state.results)} */}
                       <ul className={`glyphcardList${glyphnameToggle === 'shownames' ? ' shownames' : ''}`}>{hasQuery && validResults(state.results) ? rangeHandler(state.results).map((item, index) => <GlyphCard item={item} key={index} inspectoropen={state.inspectorOpen} />) : null}</ul>
                     </div>
                     <div className="glyphPanelUnit">{state.inspectorOpen && state.inspectorData ? <Inspector data={state.inspectorData} /> : ''}</div>

@@ -8,12 +8,20 @@ import { hyphenTitleCase } from '../../logic/CaseHandlers'
 
 function Inspector({ inspectoropen, data }) {
   const [copiedEntity, setCopiedEntity] = useState({ value: '', copied: false })
-  /* const [data.glyph, charname] = index.split(';') */
-  // const data.glyph = String.fromCodePoint(parseInt(data.glyph, 16))
-  // const hyphenTitleCaseVal = hyphenTitleCase(charname)
+  const isSeq = data.item.length > 1
   const appDispatch = useContext(DispatchContext)
-  const urlEscape = encodeURIComponent(data.glyph)
-  const utf8 = urlEscape.split('%').join(' 0x').trim()
+
+  const urlEscape = `%${[]
+    .concat(data.glyph || [])
+    .map(i => `${encodeURIComponent(i)}`)
+    .join('%')}`
+  const utf8 = urlEscape.split('%').join('0x').trim()
+  const htmlEntity = `&#${[]
+    .concat(data.glyph || [])
+    .map(i => parseInt(i, 16))
+    .join(';&#')};`
+  const htmlEntityHex = `&#x${[].concat(data.glyph || []).join(';&#x')};`
+  const cssEncode = `\\${[].concat(data.glyph || []).join('\\')}`
 
   const closeHandler = () => {
     appDispatch({ type: 'closeinspector', inspectoropen: false })
@@ -40,30 +48,31 @@ function Inspector({ inspectoropen, data }) {
         <div className={styles.inspector_column}>
           <CopyToClipboard
             onCopy={() => copyFlashHandler('Glyph')}
-            className={`pseudocopybutton ${styles.inspector_bigletter}
-      ${(data.processedName.toLowerCase().includes('space') || data.processedName.toLowerCase().includes('invisible')) && isBlankChar(data.glyph) ? ` ${styles.sideborder}` : ''}`}
+            className={`pseudocopybutton ${styles.inspector_bigglyph}
+      ${(data.processedName.toLowerCase().includes('space') || data.processedName.toLowerCase().includes('invisible')) && isBlankChar(data.characterString) ? ` sideborder` : ''}`}
             text={data.characterString}>
             <h3>
               <span style={{ fontSize: `${OversizeCharCompensator(data.characterString)}em` }}>{data.characterString}</span>
             </h3>
           </CopyToClipboard>
           <CopyToClipboard className={`pseudocopybutton ${styles.inspector_name}`} onCopy={() => copyFlashHandler('Glyph name')} text={data.processedName}>
-            <p>{data.processedName}</p>
+            <p>
+              <span>{data.processedName.replace(/( )([\w]{1,4})$/, '\u00a0$2')}</span>
+            </p>
           </CopyToClipboard>
         </div>
-
         <div className={styles.inspector_column}>
           <div className={`${styles.inspector_info}`}>
-            <CopyToClipboard data-type="HTML Entity" onCopy={() => copyFlashHandler('HTML entity')} className={`pseudocopybutton ${styles.inspector_entity}`} text={`&#${parseInt(data.glyph, 16)};`}>
-              <p>{`&#${parseInt(data.glyph, 16)};`}</p>
+            <CopyToClipboard data-type={`HTML Entity${isSeq ? ' sequence' : ''}`} onCopy={() => copyFlashHandler(`HTML entity${isSeq ? ' sequence' : ''}`)} className={`pseudocopybutton ${styles.inspector_entity}`} text={htmlEntity}>
+              <p>{htmlEntity}</p>
             </CopyToClipboard>
-            <CopyToClipboard data-type="HTML Entity (Hex)" onCopy={() => copyFlashHandler('HTML hex entity')} className={`pseudocopybutton ${styles.inspector_entity}`} text={`&#x${data.glyph};`}>
-              <p>{`&#x${data.glyph};`}</p>
+            <CopyToClipboard data-type={`HTML Entity${isSeq ? ' Sequence' : ''} (Hex)`} onCopy={() => copyFlashHandler(`HTML entity${isSeq ? ' sequence' : ''} (hex)`)} className={`pseudocopybutton ${styles.inspector_entity}`} text={htmlEntityHex}>
+              <p>{htmlEntityHex}</p>
             </CopyToClipboard>
-            <CopyToClipboard data-type="CSS Encoding" onCopy={() => copyFlashHandler('CSS encoding')} className={`pseudocopybutton ${styles.inspector_entity}`} text={`\\${data.glyph}`}>
-              <p>{`\\${data.glyph}`}</p>
+            <CopyToClipboard data-type="CSS Encoding" onCopy={() => copyFlashHandler('CSS encoding')} className={`pseudocopybutton ${styles.inspector_entity}`} text={cssEncode}>
+              <p>{cssEncode}</p>
             </CopyToClipboard>
-            <CopyToClipboard data-type={`URL Escape Code${urlEscape.split('%').length <= 2 ? '' : 's'}`} onCopy={() => copyFlashHandler('URL escape code')} className={`pseudocopybutton ${styles.inspector_entity}`} text={urlEscape}>
+            <CopyToClipboard data-type={`URL Escape Code${urlEscape.split('%').length <= 2 ? '' : isSeq ? ' sequence' : 's'}`} onCopy={() => copyFlashHandler('URL escape code')} className={`pseudocopybutton ${styles.inspector_entity}`} text={urlEscape}>
               <p>{urlEscape}</p>
             </CopyToClipboard>
             <CopyToClipboard data-type={`UTF-8 Encoding`} onCopy={() => copyFlashHandler('UTF-8 encoding')} className={`pseudocopybutton ${styles.inspector_entity}`} text={utf8}>

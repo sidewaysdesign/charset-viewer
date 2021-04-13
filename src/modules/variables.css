@@ -77,26 +77,32 @@ $toggledot: 1.25rem;
   color: black;
   font-weight: 500;
   display: block;
-  font-size: 1rem;
   background-color: $mist;
   border-radius: 100px;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  padding: $margin resolve($margin * 2);
+  font-size: 0.8rem;
+  padding: resolve($margin * 0.75) resolve($margin * 1.25);
+  @mixin atX {
+    font-size: 1rem;
+    padding: $margin resolve($margin * 2);
+  }
   &:active,
   &:focus {
     transition: 0.3s all ease;
     opacity: 0.75;
-    transform: translateY(0.125rem);
   }
 }
 @define-mixin pseudocopybutton {
   &:active,
   &:focus {
     transition: 0.3s all ease;
-    opacity: 0.75;
-    transform: translateY(0.125rem);
+    opacity: 0.7 !important;
+    transform: translateY(0);
+    &::after {
+      transform: translateY(calc(-50% + 0.125rem));
+    }
   }
   &::after {
     padding: 0.375rem 0.5rem;
@@ -104,9 +110,25 @@ $toggledot: 1.25rem;
     right: 0;
     top: 50%;
     left: auto;
-    width: 3rem;
+    min-width: 1.75rem;
     content: 'COPY';
     position: absolute;
     @mixin copybutton;
+    @mixin atX {
+      padding: 0.375rem 0.5rem;
+      min-width: 3rem;
+    }
   }
+}
+
+@define-mixin emptymessage {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  opacity: 0.5;
+  font-size: 2rem;
 }

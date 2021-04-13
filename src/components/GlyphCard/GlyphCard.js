@@ -8,9 +8,7 @@ import { hyphenTitleCase, lowercaseConjunctions } from '../../logic/CaseHandlers
 import styles from './glyphcard.module.css'
 
 function GlyphCard({ item, inspectoropen }) {
-  console.log('GlyphCard item input', item)
   const singleUnicode = typeof item === 'number'
-  // console.log('[flagDescriptor(item)]', [flagDescriptor(item)])
   const [glyph, charname] = singleUnicode ? unicodeData[item].split(';') : flagDescriptor(item)
   const characterString = []
     .concat(glyph || [])
@@ -25,7 +23,7 @@ function GlyphCard({ item, inspectoropen }) {
   }
   return (
     <li className={styles.unit} onClick={() => openInspectorHandler()}>
-      <h3 className={`${styles.bigletter}${(charname.toLowerCase().includes('space') || charname.toLowerCase().includes('invisible')) && isBlankChar(characterString) ? ` ${styles.sideborder}` : ''}`}>
+      <h3 className={`${styles.bigglyph}${(charname.toLowerCase().includes('space') || charname.toLowerCase().includes('invisible')) && isBlankChar(characterString) ? ` ${styles.sideborder}` : ''}`}>
         <span>{characterString}</span>
       </h3>
       <div className={styles.info}>

@@ -28,13 +28,14 @@ function EntityPanel({ query, entityType, entityHandler }) {
         defaultOption = options[1]
         break
       default:
-        entitystring = encodeURI(Entities.encode(query))
+        entitystring = Entities.encode(query)
         copymessage = 'HTML entities'
         defaultOption = options[0]
     }
     return (
       <>
         <CopyToClipboard onCopy={() => copyFlashHandler(copymessage)} text={entitystring}>
+          {/* <div className={styles.field}>{entitystring.split('%').forEach(i => `span${i}span`)}</div> */}
           <div className={styles.field}>{entitystring}</div>
         </CopyToClipboard>
         <CopyToClipboard onCopy={() => copyFlashHandler(copymessage)} text={entitystring}>
@@ -53,7 +54,7 @@ function EntityPanel({ query, entityType, entityHandler }) {
         </div>
       ) : (
         <>
-          <p className={styles.nothing}>No results</p>
+          <p className={styles.nothing}>No current results.</p>
         </>
       )}
     </div>

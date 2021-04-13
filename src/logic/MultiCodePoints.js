@@ -263,21 +263,11 @@ const flagSet = [
   { glyph: '🏴󠁵󠁳󠁴󠁸󠁿', abbr: 'US-TX', desc: 'Flag for Texas', sequence: [127988, 917621, 917619, 917620, 917624, 917631] }
 ]
 const flagDescriptor = arr => {
-  // console.log('arr', arr)
   const arrJSON = JSON.stringify(arr)
-  console.log('arrJSON', arrJSON)
-  console.log('i.seq', JSON.stringify(flagSet[0].sequence))
   const seqObj = flagSet.find(i => {
-    // console.log('i.sequence', JSON.stringify(i.sequence))
     return JSON.stringify(i.sequence) === arrJSON
   })
-  console.log('seqObj', seqObj)
   const hexArray = arr.map(i => i.toString(16).toUpperCase().padStart(4, '0'))
   return [hexArray, seqObj.desc]
 }
-// const flagSearch = search => {
-//   const seqObj = flagSet.find(i => JSON.stringify(i.sequence) === JSON.stringify(arr))
-//   const hexArray = arr.map(i => i.toString(16).toUpperCase().padStart(4, '0'))
-//   return [hexArray, seqObj.desc]
-// }
 export { flagDescriptor, flagSet }

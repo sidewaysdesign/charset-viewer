@@ -42,18 +42,35 @@ button {
   }
 }
 .main_input {
-  margin-top: $margin;
-  padding: resolve($margin * 1.5);
   border: 1px solid color($secondary lightness(75%));
   outline: none;
-  font-size: 2rem;
   line-height: 1;
   color: black;
   width: 100%;
+  letter-spacing: -0.01em;
   ::placeholder: '';
   font-family: 'Inter', 'apple color emoji', 'segoe ui emoji', 'noto color emoji', notocoloremoji, 'segoe ui symbol', 'android emoji', emojisymbols, 'emojione mozilla', 'twemoji mozilla', 'segoe ui symbol', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  margin-top: resolve($margin * 0.5);
+  padding: resolve($margin * 0.5) $margin;
+  font-size: 1.5rem;
+  @mixin atX {
+    margin-top: $margin;
+    padding: resolve($margin * 1.5);
+    font-size: 2rem;
+  }
   @mixin atMd {
     font-size: 2.625rem;
+  }
+  display: grid;
+  &::placeholder {
+    font-size: 70%;
+    position: relative;
+    bottom: 0.24ex;
+    white-space: pre-line;
+    letter-spacing: -0.02em;
+    margin: 0;
+    @mixin atSm {
+    }
   }
 }
 label {

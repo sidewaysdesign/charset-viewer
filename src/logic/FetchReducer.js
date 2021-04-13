@@ -7,7 +7,6 @@ function fetchReducer(state, action) {
         hasError: false
       }
     case 'FETCH_SUCCESS':
-      console.log('payload -->', action.payload)
       return {
         ...state,
         isLoading: false,

@@ -4,7 +4,6 @@
 .mobileModeContainer {
   ul {
     padding: 0;
-    margin: 1.25rem 0;
     list-style-type: none;
     display: flex;
     position: relative;
@@ -13,6 +12,10 @@
     margin-right: auto;
     align-items: center;
     justify-content: center;
+    margin: 0.625rem 0;
+    @mixin atX {
+      margin: 1.25rem 0;
+    }
     @mixin atMd {
       margin: 2rem 0;
       display: none;
@@ -22,12 +25,17 @@
       color: white;
       font-weight: 600;
       text-transform: uppercase;
-      padding: 0.75rem 1rem;
-      width: 7.75rem;
       text-align: center;
       cursor: pointer;
       position: relative;
       user-select: none;
+      width: 7rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.88rem;
+      @mixin atX {
+        font-size: inherit;
+        padding: 0.75rem 1rem;
+      }
       @mixin atSm {
         width: 10rem;
       }
