@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import ourReducer from './logic/OurReducer'
 import Paginators from './components/Paginators/Paginators'
 import GlyphCard from './components/GlyphCard/GlyphCard'
@@ -12,16 +12,18 @@ import DispatchContext from './DispatchContext'
 import EntityPanel from './components/EntityPanel/EntityPanel'
 import FlashAlerts from './components/FlashAlerts/FlashAlerts'
 import Footer from './components/Footer/Footer'
-
 import { useImmerReducer } from 'use-immer'
 import './App.css'
 
 /* TODO: set focus on input */
+/* TODO: stora current input in URL param */
 /* TODO: prevent re-renders on inspector copy */
 /* TODO: add lightweight categories to search (e.g. fruits, sports) */
+/* TODO: dismiss inspector by click outside popup */
 /* TODO: improve branding/theming */
 /* TODO: HTML entities, numbered glyphs results (no %) */
 /* TODO: “load more” for long result lists  */
+/* TODO: smooth animations for inspector  */
 
 const Entities = require('html-entities').AllHtmlEntities
 const initialResultsPerPage = 200

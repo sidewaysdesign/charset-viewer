@@ -16,7 +16,7 @@ function SearchInput({ query, onInputChange, placeholder }) {
       threshold: searchAccuracy,
       includeScore: true
     })
-  }, [unicodeNames, searchAccuracy])
+  }, [searchAccuracy])
   const fuseFlags = useMemo(() => {
     return new Fuse(flagSet, {
       keys: ['desc', 'abbr'],

@@ -8,6 +8,9 @@ $margin: 0.5rem;
 $cardsize: 7.5rem;
 .inspector {
   &_unit {
+    * {
+      user-select: none;
+    }
     transition: 0.3s all ease;
     position: relative;
     box-sizing: border-box;
@@ -45,6 +48,10 @@ $cardsize: 7.5rem;
       font-size: $charSize;
       height: $charSize;
     }
+    @mixin atShort {
+      font-size: resolve($charSize * 0.625);
+      height: resolve($charSize * 0.625);
+    }
   }
   &_info {
     box-sizing: border-box;
@@ -70,7 +77,7 @@ $cardsize: 7.5rem;
     align-content: center;
     position: relative;
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -83,10 +90,10 @@ $cardsize: 7.5rem;
     }
     @mixin atSmmd {
       -webkit-line-clamp: 3;
-      max-height: 3em;
+      max-height: 3.625em;
     }
     @mixin atLg {
-      -webkit-line-clamp: 4;
+      -webkit-line-clamp: 3;
     }
   }
   &_entity {
@@ -168,6 +175,8 @@ $cardsize: 7.5rem;
     height: $closex;
     display: none;
     @mixin atMd {
+      top: resolve($margin * 3);
+      right: resolve($margin * 1.5);
       display: block;
     }
     &:hover::before,
@@ -195,15 +204,7 @@ $cardsize: 7.5rem;
 }
 :global .sideborder {
   span {
-    background-clip: padding-box;
-    padding: 0;
-    box-sizing: border-box;
-    white-space: pre;
-    position: relative;
-    display: inline-block;
-    border: 1px solid rgba(0, 0, 0, 0.4);
-    border-width: 0 1px;
-    background: repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06) 6px, rgba(0, 0, 0, 0.09) 6px, rgba(0, 0, 0, 0.09) 12px);
+    @mixin sideborder;
   }
 }
 :global .copied {

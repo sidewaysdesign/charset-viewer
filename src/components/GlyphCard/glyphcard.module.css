@@ -19,9 +19,19 @@ $cardsize: 7.5rem;
   margin-right: $margin;
   display: grid;
   justify-content: center;
+  cursor: pointer;
+  user-select: none;
 
   &:nth-child(4n) {
     margin-right: 0;
+  }
+  &:last-child {
+    :global .shownames & {
+      margin-bottom: 0;
+      @mixin atMd {
+        margin-bottom: $margin;
+      }
+    }
   }
   @mixin atX {
     flex-basis: calc(20% - $margin);
@@ -33,19 +43,20 @@ $cardsize: 7.5rem;
     }
   }
   @mixin atSm {
-    /* flex-basis: calc(16.6667% - resolve($margin * 4/5)); */
-    flex-basis: calc(14.2857142857% - resolve($margin * 6/7));
+    flex-basis: calc(16.6667% - resolve($margin * 5/6));
+    /* flex-basis: calc(14.2857142857% - resolve($margin * 6/7)); */
+    /* flex-basis: calc(14.2857142857% - resolve($margin * 6/7)); */
     &:nth-child(5n) {
       margin-right: $margin;
     }
-    &:nth-child(7n) {
+    &:nth-child(6n) {
       margin-right: 0;
     }
   }
-  @mixin atSmmd {
+  @mixin atSmmdPlus {
     /* flex-basis: calc(12.5% - resolve($margin * 7/8)); */
     flex-basis: calc(11.111% - resolve($margin * 8/9));
-    &:nth-child(7n) {
+    &:nth-child(6n) {
       margin-right: $margin;
     }
     &:nth-child(9n) {
@@ -53,25 +64,25 @@ $cardsize: 7.5rem;
     }
   }
   @mixin atMd {
-    /* flex-basis: calc(16.6667% - resolve($margin * 4/5)); */
-    flex-basis: calc(14.2857142857% - resolve($margin * 6/7));
+    flex-basis: calc(16.6667% - resolve($margin * 5/6));
+    /* flex-basis: calc(14.2857142857% - resolve($margin * 6/7)); */
     &:nth-child(9n) {
       margin-right: $margin;
     }
-    &:nth-child(7n) {
-      margin-right: 0;
-    }
-  }
-  @mixin atLg {
-    flex-basis: calc(11.111% - resolve($margin * 8/9));
-    &:nth-child(7n) {
-      margin-right: $margin;
-    }
-    &:nth-child(9n) {
+    &:nth-child(6n) {
       margin-right: 0;
     }
   }
   @mixin atXl {
+    flex-basis: calc(11.111% - resolve($margin * 8/9));
+    &:nth-child(6n) {
+      margin-right: $margin;
+    }
+    &:nth-child(9n) {
+      margin-right: 0;
+    }
+  }
+  /* @mixin atXxl {
     flex-basis: calc(8.3333333333% - resolve($margin * 11/12));
     &:nth-child(9n) {
       margin-right: $margin;
@@ -79,7 +90,7 @@ $cardsize: 7.5rem;
     &:nth-child(12n) {
       margin-right: 0;
     }
-  }
+  } */
   :global .shownames :local & {
     grid-template-columns: auto 1fr auto;
     margin-right: $margin;
@@ -147,6 +158,10 @@ $cardsize: 7.5rem;
   @mixin atSmmd {
     padding: resolve($margin/2) 0 0;
   }
+  @mixin atMd {
+    width: 100%;
+    margin-left: 0;
+  }
   font-family: 'Inter Bold', 'apple color emoji', 'segoe ui emoji', 'noto color emoji', notocoloremoji, 'segoe ui symbol', 'android emoji', emojisymbols, 'emojione mozilla', 'twemoji mozilla', 'segoe ui symbol', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
   &:hover {
   }
@@ -155,7 +170,7 @@ $cardsize: 7.5rem;
     padding-bottom: resolve($margin * 1.25);
     margin-bottom: -0.0625em;
     @mixin atSm {
-      width: 1.75em;
+      width: 1.375em;
     }
     @mixin atMd {
       margin-bottom: -0.1875em;
@@ -195,24 +210,25 @@ $cardsize: 7.5rem;
   -webkit-line-clamp: 2;
   p {
     margin: 0;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 1rem;
     letter-spacing: -0.015em;
+    /* -webkit-font-smoothing: subpixel-antialiased; */
   }
   @mixin atSmmd {
   }
   @mixin atMd {
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
   }
   :global .shownames :local & {
     width: 100%;
     @mixin atMd {
       p {
         font-size: 0.88rem;
-        line-height: 1.25;
-        height: 2.2em;
-        font-weight: 500;
+        line-height: 1.2;
+        height: 2em;
         margin-bottom: resolve($margin * 0.75);
+        font-size: 0.85rem;
       }
       text-align: center;
     }
@@ -252,7 +268,7 @@ $cardsize: 7.5rem;
 }
 .entity,
 .name,
-.bigglyph {
+.bigglpyh {
   cursor: pointer;
   &:hover:after {
     transition: 0.5s opacity ease;
@@ -264,15 +280,7 @@ $cardsize: 7.5rem;
 
 .sideborder {
   span {
-    background-clip: padding-box;
-    padding: 0;
-    box-sizing: border-box;
-    white-space: pre;
-    position: relative;
-    display: inline-block;
-    border: 1px solid rgba(0, 0, 0, 0.4);
-    border-width: 0 1px;
-    background: repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06) 6px, rgba(0, 0, 0, 0.09) 6px, rgba(0, 0, 0, 0.09) 12px);
+    @mixin sideborder;
   }
 }
 :global .copied {

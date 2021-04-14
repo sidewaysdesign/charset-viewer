@@ -19,6 +19,9 @@ h4,
 h5 {
   font-weight: 700;
 }
+h1 {
+  -webkit-font-smoothing: subpixel-antialiased;
+}
 p {
   font-weight: 400;
 }
@@ -64,7 +67,6 @@ footer {
   display: flex;
   overflow: hidden;
   flex: 1 auto;
-  /* align-items: stretch; */
   height: 100%;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -74,7 +76,6 @@ footer {
     display: flex;
     flex-direction: row;
     width: 100%;
-    /* outline: 3px solid color(pink a(40%)); */
     min-height: 500px;
   }
 }
@@ -90,27 +91,17 @@ footer {
   width: 100%;
   height: 100%;
   transition: 0.3s all ease;
-
-  /* position: relative; */
-  /* min-height: 500px; */
   align-self: flex-start;
-  /* height: 100%; */
   display: flex;
   flex-basis: 100%;
   @mixin atMd {
-    /* height: auto; */
     position: relative;
     flex-basis: 60%;
   }
 }
 .glyphcardContainer {
-  /* overflow: hidden; */
-  /* height: 100%; */
   align-items: flex-start;
   @mixin atMd {
-    /* margin-right: $margin; */
-    /* height: auto; */
-    /* max-width: 900px; */
     width: 65%;
     flex-basis: 75%;
     margin-right: $margin;
@@ -121,10 +112,8 @@ footer {
   }
   .showentities & {
     opacity: 0;
-    /* z-index: -1; */
     @mixin atMd {
       opacity: 1;
-      /* z-index: 0; */
     }
   }
 }
@@ -133,7 +122,6 @@ footer {
   opacity: 0;
   z-index: -1;
   position: relative;
-  /* flex-direction: column; */
   color: white;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr;
@@ -154,19 +142,15 @@ footer {
   }
 }
 .glyphPanelUnit {
-  /* z-index: 0; */
   position: relative;
   &:first-child {
     transition: $transitionpanelshift;
   }
-  @mixin atMd {
-    &:first-child {
-    }
-  }
-
   .inspectoropen & {
     &:first-child {
-      @mixin atMd {
+      transform: translateX(-$margin);
+      @mixin atMdPlusShort {
+        transform: none;
         margin-left: 0;
       }
     }
@@ -181,8 +165,7 @@ footer {
         opacity: 1;
         left: 0;
         top: 0;
-        /* z-index: 99; */
-        @mixin atMd {
+        @mixin atMdPlusShort {
           content: '';
         }
       }
@@ -200,7 +183,7 @@ footer {
   flex-basis: 1 1 auto;
   background-color: white;
   border-radius: 0.4375rem;
-  @mixin atMd {
+  @mixin atMdPlusShort {
     height: auto;
     padding: $overset 0 0 0;
     transform: translate(-50%, -50%);
@@ -210,6 +193,9 @@ footer {
     width: 600px;
     position: fixed;
     box-shadow: $margin $margin resolve($margin * 3) rgba(0, 0, 0, 0.5);
+  }
+  @mixin atShort {
+    width: 400px;
   }
 }
 .glyphcardList::-webkit-scrollbar {
@@ -249,20 +235,27 @@ footer {
   flex: 1;
   justify-content: flex-start;
   margin: 0;
+  @mixin atMd {
+    padding-right: 0.375rem;
+  }
   @mixin atLg {
     padding: 0 resolve($margin * 0.5) 0 0;
     grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
   }
-  /* height: calc(100% + $overset); */
-  /* margin-top: -$overset; */
-  /* outline: 2px solid red; */
-  /* padding-top: $overset; */
-  /* background: linear-gradient(to bottom, transparent 0, black $overset, black calc(100% - 6rem), transparent calc(100% - 2px), gold calc(100% - 2px), gold 100%); */
-  /* mask-image: linear-gradient(to bottom, transparent 0, black $overset, black calc(100% - resolve($overset * 6)), transparent 100%); */
+
+  /* & > * {
+    transform: translateX(-2rem);
+  } */
+
   &:empty {
     &::before {
+      display: block;
       @mixin emptymessage;
       content: 'No current results.';
+      margin-top: -0.625em;
+      @mixin atMd {
+        /* margin-top: -0.5em; */
+      }
     }
   }
   &:last-child:after {
@@ -276,34 +269,24 @@ footer {
   display: grid;
   position: relative;
   width: 200%;
-  /* flex-direction: row; */
   max-height: 100%;
   min-height: 100%;
-  /* height: auto; */
   grid-template-columns: 1fr 1fr;
   align-items: stretch;
-  @mixin atMd {
-    /* display: block; */
-    /* width: 100%
-    ; */
-  }
   .inspectoropen & {
     z-index: 100;
   }
 }
 .glyphcardWrapper {
   transition: $transitionpanelshift;
-  /* height: 100%; */
   width: 100%;
   display: grid;
   grid-template-rows: auto 1fr;
   height: 100%;
-  /* max-height: 100%; */
-  /* overflow: visible; */
   position: relative;
   &.inspectoropen {
     transform: translateX(-100%);
-    @mixin atMd {
+    @mixin atMdPlusShort {
       transform: none;
     }
   }
@@ -324,23 +307,19 @@ footer {
     transform: translateX(resolve($margin * 0.5));
     .inspectoropen & {
       transform: translateX(resolve(-$margin * 0.5));
-      /* transform: none; */
     }
     font-size: 0.82rem;
   }
   &::before {
-    /* bottom: -1.125ex; */
     position: relative;
     content: '';
     background: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 15 20"><style type="text/css">.a1{fill:none;stroke:%23ffffff;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:10;}</style><line class="a1" x1="2.5" y1="10" x2="15" y2="10"/><polyline class="a1" points="7.5,5 2.5,10 7.5,15"/></svg>') no-repeat center center;
     background-size: contain;
     width: 1rem;
     height: 1.125rem;
-    /* background-color: pink; */
     display: inline-block;
     margin-right: resolve($margin * 0.625);
     @mixin atX {
-      /* margin-right: $margin; */
       width: 1rem;
       height: 1.5rem;
     }
@@ -379,9 +358,13 @@ footer {
 /* prettier-ignore */
 @keyframes flashAlertAnim {
   0% {
+    z-index:-1000;
     opacity: 0;
+  }
+  0.1% {
     visibility: hidden;
     transform: translateX(-50%) scale(1.2);
+    z-index:101;
   }
   30% {
     opacity: 1;
@@ -393,10 +376,14 @@ footer {
     visibility: visible;
     transform: translateX(-50%) scale(1);
   }
-  100% {
+  99.9% {
     opacity: 0;
     visibility: hidden;
-
     transform: translateX(-50%) scale(1.2);
+    z-index:101;
+  }
+  100% {
+    opacity: 0;
+    z-index:-1000;
   }
 }

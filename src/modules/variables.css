@@ -98,7 +98,7 @@ $toggledot: 1.25rem;
   &:active,
   &:focus {
     transition: 0.3s all ease;
-    opacity: 0.7 !important;
+    opacity: 0.5;
     transform: translateY(0);
     &::after {
       transform: translateY(calc(-50% + 0.125rem));
@@ -120,10 +120,42 @@ $toggledot: 1.25rem;
     }
   }
 }
-
+@define-mixin sideborder {
+  $bordercolor: rgba(0, 0, 0, 0.4);
+  background-clip: padding-box;
+  padding: 0;
+  box-sizing: border-box;
+  white-space: pre;
+  position: relative;
+  display: inline-block;
+  border: 1px dashed $bordercolor;
+  border-width: 0 1px;
+  background: repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.02) 6px, rgba(0, 0, 0, 0.04) 6px, rgba(0, 0, 0, 0.04) 12px);
+  position: relative;
+  &::before,
+  &::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    position: absolute;
+    top: calc(50% - 3px);
+    left: 0;
+  }
+  &::before {
+    border-left-color: $bordercolor;
+    left: -0.5rem;
+  }
+  &::after {
+    left: auto;
+    right: -0.5rem;
+    border-right-color: $bordercolor;
+  }
+}
 @define-mixin emptymessage {
   position: absolute;
   width: 100%;
+  display: block;
   text-align: center;
   top: 50%;
   left: 50%;

@@ -49,7 +49,7 @@ function Inspector({ inspectoropen, data }) {
           <CopyToClipboard
             onCopy={() => copyFlashHandler('Glyph')}
             className={`pseudocopybutton ${styles.inspector_bigglyph}
-      ${(data.processedName.toLowerCase().includes('space') || data.processedName.toLowerCase().includes('invisible')) && isBlankChar(data.characterString) ? ` sideborder` : ''}`}
+      ${isBlankChar(data.characterString) ? ` sideborder` : ''}`}
             text={data.characterString}>
             <h3>
               <span style={{ fontSize: `${OversizeCharCompensator(data.characterString)}em` }}>{data.characterString}</span>

@@ -61,7 +61,7 @@ header {
     }
     @mixin atMd {
       text-align: left;
-      font-size: 3rem;
+      font-size: 2.75rem;
     }
   }
   &:nth-child(1) {
@@ -87,6 +87,10 @@ header {
   }
 }
 
+html,
+body {
+  min-height: -webkit-fill-available;
+}
 .App {
   /* text-align: center; */
   font-weight: 300;
@@ -95,7 +99,8 @@ header {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  min-height: 100vh;
+  height: 100vh;
+  max-height: -webkit-fill-available;
   max-width: 960px;
   transition: 0.3s all ease;
   @mixin atX {

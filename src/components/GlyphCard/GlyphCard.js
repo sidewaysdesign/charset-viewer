@@ -23,7 +23,8 @@ function GlyphCard({ item, inspectoropen }) {
   }
   return (
     <li className={styles.unit} onClick={() => openInspectorHandler()}>
-      <h3 className={`${styles.bigglyph}${(charname.toLowerCase().includes('space') || charname.toLowerCase().includes('invisible')) && isBlankChar(characterString) ? ` ${styles.sideborder}` : ''}`}>
+      {/* <h3 className={`${styles.bigglyph}${(charname.toLowerCase().includes('space') || charname.toLowerCase().includes('invisible')) && isBlankChar(characterString) ? ` ${styles.sideborder}` : ''}`}> */}
+      <h3 className={`${styles.bigglyph}${isBlankChar(characterString) ? ` ${styles.sideborder}` : ''}`}>
         <span>{characterString}</span>
       </h3>
       <div className={styles.info}>
