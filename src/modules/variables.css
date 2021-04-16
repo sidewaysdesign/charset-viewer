@@ -12,10 +12,12 @@ $margin-layout: resolve($margin * 2);
 $grey: #707070;
 $charcoal: #4a4a4a;
 $mist: #dfdfdf;
+$cloud: #b6b6b6;
 $storm: color(#e0e7e9 tint(40%));
 $fontsize0: 0.82rem;
 $fontsize1: 0.9375rem;
 $fontsize2: 1.5rem;
+$fontfam1: 'Inter', sans-serif;
 
 /* $transitionpanelshift: 1s margin-left ease; */
 $transitionpanelshift: 0.5s transform ease;
@@ -39,6 +41,7 @@ $toggledot: 1.25rem;
   text-transform: uppercase;
 }
 @define-mixin toggleIcon {
+  cursor: pointer;
   padding-right: calc($togglewidth + $margin);
   transition: 0.3s all ease;
   opacity: 0.5;
@@ -150,6 +153,48 @@ $toggledot: 1.25rem;
     left: auto;
     right: -0.5rem;
     border-right-color: $bordercolor;
+  }
+}
+$bordercolor: rgba(0, 0, 0, 0.4);
+@define-mixin unavailable {
+  padding: 0;
+  box-sizing: border-box;
+  white-space: pre;
+  position: relative;
+  display: inline-block;
+  border-width: 0 1px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  &::before {
+    position: absolute;
+    content: '';
+    width: 1em;
+    height: 1em;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -0.075em;
+    border-radius: 200px;
+    border: 2px dotted $cloud;
+  }
+  &::after {
+    content: '?';
+    font-family: $fontfam1;
+    font-weight: 500;
+    font-size: 50%;
+    position: relative;
+    bottom: 0.37em;
+    color: $cloud;
+  }
+}
+@define-mixin zerowidth {
+  &::before {
+    content: '';
+    position: absolute;
+    height: 0.885em;
+    border: 2px dotted transparent;
+    border-left-color: $bordercolor;
+    left: 0;
   }
 }
 @define-mixin emptymessage {

@@ -162,7 +162,7 @@ $cardsize: 7.5rem;
     width: 100%;
     margin-left: 0;
   }
-  font-family: 'Inter Bold', 'apple color emoji', 'segoe ui emoji', 'noto color emoji', notocoloremoji, 'segoe ui symbol', 'android emoji', emojisymbols, 'emojione mozilla', 'twemoji mozilla', 'segoe ui symbol', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: Inter, 'apple color emoji', 'segoe ui emoji', 'noto color emoji', notocoloremoji, 'segoe ui symbol', 'android emoji', emojisymbols, 'emojione mozilla', 'segoe ui symbol', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
   &:hover {
   }
   :global .shownames :local & {
@@ -278,9 +278,20 @@ $cardsize: 7.5rem;
   }
 }
 
-.sideborder {
+:global .sideborder {
   span {
     @mixin sideborder;
+    &::before,
+    &::after {
+      top: 0.425em;
+      border-width: 5px;
+    }
+    &::before {
+      left: -0.15em;
+    }
+    &::after {
+      right: -0.15em;
+    }
   }
 }
 :global .copied {
@@ -292,18 +303,6 @@ $cardsize: 7.5rem;
 :global .copiedactive {
   transform: translateY(100%);
   animation: float 1.125s normal forwards ease;
-}
-/* prettier-ignore */
-@keyframes :global(wiggle){
-  0%,100% {
-    transform: translateX(0%) translateY(-50%);
-  }
-  33.33%,66.66% {
-    transform: translateX(20%) translateY(-50%);
-  }
-  16.665%, 50%, 83.325% {
-    transform: translateX(-20%) translateY(-50%);
-  }
 }
 /* prettier-ignore */
 @keyframes :global(float) {

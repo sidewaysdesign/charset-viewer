@@ -1,6 +1,6 @@
 @import '../../modules/breakpoints.css';
 @import '../../modules/variables.css';
-$closex: 2rem;
+$closex: 2.75rem;
 $charSize: 7.75rem;
 $iconsize: 1.125rem;
 
@@ -40,9 +40,23 @@ $cardsize: 7.5rem;
     font-weight: 500;
     text-align: left;
     top: 0.5rem;
-    width: 100%;
+    position: relative;
+    text-align: center;
+    &::after {
+      content: 'xx;';
+      position: relative;
+      /* top: 50%; */
+      /* left: 1em; */
+      font-size: 0.88rem;
+      /* font-family:$fontf */
+    }
+    span {
+      position: relative;
+      display: block;
+      width: 1em;
+    }
     margin-bottom: resolve($margin * 2);
-    font-family: 'Inter Bold', 'apple color emoji', 'segoe ui emoji', 'noto color emoji', notocoloremoji, 'segoe ui symbol', 'android emoji', emojisymbols, 'emojione mozilla', 'twemoji mozilla', 'segoe ui symbol', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+    font-family: Inter, 'apple color emoji', 'segoe ui emoji', 'noto color emoji', notocoloremoji, 'segoe ui symbol', 'android emoji', emojisymbols, 'emojione mozilla', 'segoe ui symbol', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
     @mixin atX {
       margin-bottom: resolve($margin * 4);
       font-size: $charSize;
@@ -67,9 +81,11 @@ $cardsize: 7.5rem;
   &_name,
   &_entity {
     text-align: left;
-    padding: $margin resolve($iconsize + $margin) $margin $margin;
     margin: 0;
     margin-top: resolve($margin * 0.25);
+    @mixin atMdPlusShort {
+      padding-right: 4.5rem !important;
+    }
   }
   &_name {
     display: block;
@@ -82,7 +98,6 @@ $cardsize: 7.5rem;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 1.25rem;
-    padding: 0 2rem 0 0;
     margin: $margin 0;
     @mixin atX {
       padding: 0 4.625rem 0 0;
@@ -99,13 +114,23 @@ $cardsize: 7.5rem;
   &_entity {
     position: relative;
     line-height: 1;
-    font-family: Courier, 'Inter', monospace;
     color: black;
     text-align: left;
     margin: 0;
     margin-top: resolve($margin * 0.25);
     padding: $margin resolve($iconsize + resolve($margin * 0.5)) resolve($margin * 0.5) 0;
     font-size: 1.25rem;
+    width: 100%;
+    overflow: hidden;
+    display: block;
+    &,
+    span {
+      font-family: Courier, 'Inter', monospace;
+    }
+    span {
+      display: inline-block;
+      /* outline: 2px solid blue; */
+    }
     @mixin atX {
       font-size: inherit;
       padding: $margin resolve($iconsize + $margin) $margin 0;
@@ -130,34 +155,14 @@ $cardsize: 7.5rem;
   }
   &_column {
     width: 100%;
-    @mixin atMd {
+    @mixin atMdPlusShort {
       width: 100%;
       &:first-child {
         width: 100%;
       }
     }
   }
-  &_copied {
-    box-sizing: border-box;
-    overflow: hidden;
-    width: 4rem;
-    position: absolute;
-    top: auto;
-    left: 50%;
-    bottom: 2rem;
-    display: block;
-    margin-left: -2rem;
-    opacity: 1;
-    padding: resolve($margin * 1) 0 resolve($margin * 1) 0;
-    font-weight: 700;
-    z-index: 10;
-    /* background-color: white; */
-    border: 1px solid $primary;
-    border-radius: 0.375rem;
-    box-shadow: 0 0 0.75rem $primary;
-    line-height: 1;
-    transform: translateX(-50%);
-  }
+
   &_entity,
   &_name,
   &_bigglyph {
@@ -165,34 +170,38 @@ $cardsize: 7.5rem;
     cursor: pointer;
   }
   &_closebutton {
-    z-index: 1;
+    z-index: 1000;
     padding: 0;
-    /* border-radius: 40px; */
     position: absolute;
-    top: $margin;
-    right: $margin;
     width: $closex;
     height: $closex;
+    cursor: pointer;
     display: none;
-    @mixin atMd {
-      top: resolve($margin * 3);
-      right: resolve($margin * 1.5);
+    top: $margin;
+    right: $margin;
+    @mixin atMdPlusShort {
       display: block;
+      top: resolve($margin * 1.5);
+      right: resolve($margin * 0.5);
     }
+    &:active::before,
+    &:active::after,
     &:hover::before,
     &:hover::after {
+      /* opacity: 0.5; */
       background-color: black;
     }
     &:before,
     &:after {
+      transition: 0.15s all ease;
       content: '';
-      width: $closex;
+      width: resolve($closex * 0.75);
       height: 2px;
       background-color: $grey;
       transform-origin: center;
       position: absolute;
       top: calc(resolve($closex/2) - resolve(2px / 2));
-      right: 0;
+      right: resolve($closex * 0.125);
     }
     &:before {
       transform: rotate(45deg);
@@ -202,17 +211,7 @@ $cardsize: 7.5rem;
     }
   }
 }
-:global .sideborder {
-  span {
-    @mixin sideborder;
-  }
-}
-:global .copied {
-  &:hover:after {
-    animation: wiggle 0.5s normal forwards ease;
-    opacity: 1;
-  }
-}
+
 :global .pseudocopybutton {
   @mixin pseudocopybutton;
 }
@@ -220,18 +219,7 @@ $cardsize: 7.5rem;
   transform: translateY(100%);
   animation: float 1.125s normal forwards ease;
 }
-/* prettier-ignore */
-@keyframes :global(wiggle){
-  0%,100% {
-    transform: translateX(0%) translateY(-50%);
-  }
-  33.33%,66.66% {
-    transform: translateX(20%) translateY(-50%);
-  }
-  16.665%, 50%, 83.325% {
-    transform: translateX(-20%) translateY(-50%);
-  }
-}
+
 /* prettier-ignore */
 @keyframes :global(float) {
   0% {

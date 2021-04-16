@@ -49,7 +49,7 @@ button {
   width: 100%;
   letter-spacing: -0.01em;
   ::placeholder: '';
-  font-family: 'Inter', 'apple color emoji', 'segoe ui emoji', 'noto color emoji', notocoloremoji, 'segoe ui symbol', 'android emoji', emojisymbols, 'emojione mozilla', 'twemoji mozilla', 'segoe ui symbol', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: 'Inter', 'apple color emoji', 'segoe ui emoji', 'noto color emoji', notocoloremoji, 'segoe ui symbol', 'android emoji', emojisymbols, 'emojione mozilla', 'segoe ui symbol', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
   margin-top: resolve($margin * 0.5);
   padding: resolve($margin * 0.5) $margin;
   font-size: 1.5rem;

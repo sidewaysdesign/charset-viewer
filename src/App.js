@@ -15,7 +15,6 @@ import Footer from './components/Footer/Footer'
 import { useImmerReducer } from 'use-immer'
 import './App.css'
 
-/* TODO: set focus on input */
 /* TODO: stora current input in URL param */
 /* TODO: prevent re-renders on inspector copy */
 /* TODO: add lightweight categories to search (e.g. fruits, sports) */

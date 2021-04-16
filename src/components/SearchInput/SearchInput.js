@@ -11,7 +11,7 @@ function SearchInput({ query, onInputChange, placeholder }) {
   const searchAccuracy = 0.18
   const fuseMain = useMemo(() => {
     return new Fuse(unicodeNames, {
-      minMatchCharLength: 2,
+      minMatchCharLength: 3,
       limit: 800,
       threshold: searchAccuracy,
       includeScore: true
@@ -19,7 +19,7 @@ function SearchInput({ query, onInputChange, placeholder }) {
   }, [searchAccuracy])
   const fuseFlags = useMemo(() => {
     return new Fuse(flagSet, {
-      keys: ['desc', 'abbr'],
+      keys: ['desc', 'altdesc', 'abbr'],
       minMatchCharLength: 2,
       limit: 800,
       threshold: searchAccuracy,
@@ -56,7 +56,8 @@ function SearchInput({ query, onInputChange, placeholder }) {
       return collection
     }
     const flagWordSearch = fuseFlags.search(newquery).map(x => x.item.sequence)
-    results = [...fuseMainResults, ...flagWordSearch, ...flagGlyphSearch(newquery), ...new Set(codePointMatch(newquery))]
+    console.log(flagWordSearch)
+    results = [...flagGlyphSearch(newquery), ...flagWordSearch, ...fuseMainResults, ...new Set(codePointMatch(newquery))]
     if (results.length) {
       resetCurrentPage()
       appDispatch({ type: 'showsearchresults', results: results.filter(i => i > 0 || typeof i === 'object'), query: newquery })

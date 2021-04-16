@@ -5,6 +5,7 @@ App {
 }
 body {
   background-color: #002138;
+  font-family: 'Inter', sans-serif;
 }
 .section-title {
   position: relative;
@@ -90,6 +91,7 @@ header {
 html,
 body {
   min-height: -webkit-fill-available;
+  overflow-y: hidden;
 }
 .App {
   /* text-align: center; */

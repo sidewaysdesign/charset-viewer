@@ -90,7 +90,8 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "postbuild": "node ftp.js"
   },
   "homepage": "https://sidewaysdesign.github.io/charset-viewer",
   "eslintConfig": {
@@ -109,6 +110,7 @@
     ]
   },
   "devDependencies": {
+    "ftp-deploy": "^2.4.1",
     "raw.macro": "^0.4.2"
   },
   "jest": {
