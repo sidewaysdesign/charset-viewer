@@ -1,7 +1,5 @@
 import React, { useContext } from 'react'
 import DispatchContext from '../../DispatchContext'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { derivedAttributes } from '../../logic/DerivedAttributes'
 import { unicodeData } from '../../unicode/UnicodeData'
 import { flagDescriptor } from '../../logic/MultiCodePoints'
 import { hyphenTitleCase, lowercaseConjunctions } from '../../logic/CaseHandlers'

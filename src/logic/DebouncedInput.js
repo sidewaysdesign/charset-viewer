@@ -39,8 +39,7 @@ function useDebouncedValue(initialVal, delay, callback, type, classname) {
   return [val, handleInputChange]
 }
 
-export default function InputComp({ onDebouncedValChange, delay }) {
-  const [val, handleInputChange] = useDebouncedValue('', delay, onDebouncedValChange)
-
+export default function InputComp({ value, onDebouncedValChange, delay }) {
+  const [val, handleInputChange] = useDebouncedValue(value, delay, onDebouncedValChange)
   return <input autoFocus placeholder="Search words or glyphs" className="main_input" type="text" value={val} onChange={handleInputChange} />
 }

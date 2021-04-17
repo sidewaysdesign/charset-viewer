@@ -9,7 +9,7 @@ $cardsize: 7.5rem;
   position: relative;
   box-sizing: border-box;
   border: none;
-  border-radius: $margin;
+  border-radius: resolve($margin * 0.5);
   background-color: white;
   margin-bottom: $margin;
   line-height: 1;

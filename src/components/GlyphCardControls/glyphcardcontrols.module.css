@@ -14,27 +14,37 @@
   @mixin atTn {
     height: 2rem;
   }
+
   @mixin atMd {
     width: 100%;
-    &::before {
-      content: 'Glyphs';
-      font-weight: 600;
-      color: white;
-      display: block;
-      font-size: $fontsize2;
-      line-height: 1;
-    }
   }
   & > button:first-child {
     margin-left: 0;
   }
 }
 .toggle {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  flex-basis: 25%;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  margin-right: resolve($margin * 0.75);
   @mixin controlText;
   height: 100%;
   color: color(white a(50%));
+  @mixin atMd {
+    margin-right: 0;
+  }
   span {
     @mixin toggleIcon;
+  }
+  :global .inspectoropen :local & {
+    transform: translateX(-$margin);
+    @mixin atMdPlusShort {
+      transform: none;
+    }
   }
 }
 :global .active {

@@ -8,6 +8,10 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/jest": "^26.0.22",
+    "@types/node": "^14.14.41",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
     "autoprefixer": "^10.0.0",
@@ -36,10 +40,10 @@
     "html-entities": "^1.3.1",
     "html-webpack-plugin": "4.0.0-beta.11",
     "identity-obj-proxy": "3.0.0",
-    "jest": "24.9.0",
-    "jest-environment-jsdom-fourteen": "1.0.1",
-    "jest-resolve": "24.9.0",
-    "jest-watch-typeahead": "0.4.2",
+    "jest": "^26.6.3",
+    "jest-environment-jsdom-fourteen": "^1.0.1",
+    "jest-resolve": "^26.6.2",
+    "jest-watch-typeahead": "^0.6.2",
     "mini-css-extract-plugin": "0.9.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "pluralize": "^8.0.0",
@@ -61,12 +65,12 @@
     "postcss-safe-parser": "4.0.1",
     "postcss-simple-vars": "^5.0.2",
     "prop-types": "^15.7.2",
-    "react": "^16.13.1",
+    "react": "^17.0.2",
     "react-animate-height": "^2.0.23",
-    "react-app-polyfill": "^1.0.6",
-    "react-copy-to-clipboard": "^5.0.2",
-    "react-dev-utils": "^10.2.1",
-    "react-dom": "^16.13.1",
+    "react-app-polyfill": "^2.0.0",
+    "react-copy-to-clipboard": "^5.0.3",
+    "react-dev-utils": "^11.0.4",
+    "react-dom": "^17.0.2",
     "react-dropdown": "^1.9.2",
     "reactjs-hooks-pagination": "^1.0.17",
     "resolve": "1.15.0",
@@ -77,11 +81,12 @@
     "style-loader": "0.23.1",
     "terser-webpack-plugin": "2.3.8",
     "ts-pnp": "1.1.6",
+    "typescript": "^4.2.4",
     "url-loader": "2.3.0",
     "use-debounce": "^5.0.1",
     "use-immer": "^0.4.1",
     "webpack": "4.42.0",
-    "webpack-dev-server": "3.11.0",
+    "webpack-dev-server": "^3.11.2",
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "4.3.1"
   },
@@ -93,7 +98,7 @@
     "deploy": "gh-pages -d build",
     "postbuild": "node ftp.js"
   },
-  "homepage": "https://sidewaysdesign.github.io/charset-viewer",
+  "homepage": "https://sidewaysdesign.com/glyphworks",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -167,5 +172,9 @@
     "presets": [
       "react-app"
     ]
+  },
+  "resolutions": {
+    "**/@typescript-eslint/eslint-plugin": "^4.1.1",
+    "**/@typescript-eslint/parser": "^4.1.1"
   }
 }

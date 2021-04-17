@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import ourReducer from './logic/OurReducer'
-import Paginators from './components/Paginators/Paginators'
+// import Paginators from './components/Paginators/Paginators'
 import GlyphCard from './components/GlyphCard/GlyphCard'
 import Inspector from './components/Inspector/Inspector'
 import SearchInput from './components/SearchInput/SearchInput'
 import ModeToggle from './components/ModeToggle/ModeToggle'
 import GlyphNamesToggle from './components/GlyphCardControls/GlyphCardControls'
-import { unicodeData } from './unicode/UnicodeData'
+// import { unicodeData } from './unicode/UnicodeData'
 import StateContext from './StateContext'
 import DispatchContext from './DispatchContext'
 import EntityPanel from './components/EntityPanel/EntityPanel'
 import FlashAlerts from './components/FlashAlerts/FlashAlerts'
 import Footer from './components/Footer/Footer'
 import { useImmerReducer } from 'use-immer'
+
 import './App.css'
 
-/* TODO: stora current input in URL param */
+/* TODO: add scroll within inspector */
 /* TODO: prevent re-renders on inspector copy */
 /* TODO: add lightweight categories to search (e.g. fruits, sports) */
 /* TODO: dismiss inspector by click outside popup */
@@ -23,8 +24,10 @@ import './App.css'
 /* TODO: HTML entities, numbered glyphs results (no %) */
 /* TODO: “load more” for long result lists  */
 /* TODO: smooth animations for inspector  */
+/* TODO: add category filter buttons */
+/* TODO: add glyph sequence detection/display to input */
+/* TODO: eliminate tiny animated movement of "back to glyphs" at short height */
 
-const Entities = require('html-entities').AllHtmlEntities
 const initialResultsPerPage = 200
 const useStateWithLocalStorage = (localStorageKey, defaultValue) => {
   const [value, setValue] = useState(localStorage.getItem(localStorageKey) || defaultValue)
@@ -33,7 +36,8 @@ const useStateWithLocalStorage = (localStorageKey, defaultValue) => {
 }
 function App() {
   const [currentPage, setCurrentPage] = useState(0)
-  const [resultsPerPage, setResultsPerPage] = useState(initialResultsPerPage)
+  // const [resultsPerPage, setResultsPerPage] = useState(initialResultsPerPage)
+  const resultsPerPage = initialResultsPerPage
   const [modeToggle, setModeToggle] = useStateWithLocalStorage('modeToggle', 'entities')
   const [glyphnameToggle, setGlyphnameToggle] = useStateWithLocalStorage('glyphnameToggle', 'shownames')
   const [entityType, setEntityType] = useStateWithLocalStorage('entityType', 'urlescape')

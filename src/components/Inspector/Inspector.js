@@ -1,12 +1,12 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import DispatchContext from '../../DispatchContext'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import styles from './inspector.module.css'
 import { OversizeCharCompensator } from '../../logic/OversizeCharCompensator'
-import { hyphenTitleCase } from '../../logic/CaseHandlers'
+// import { hyphenTitleCase } from '../../logic/CaseHandlers'
 
 function Inspector({ inspectoropen, data }) {
-  const [copiedEntity, setCopiedEntity] = useState({ value: '', copied: false })
+  // const [copiedEntity, setCopiedEntity] = useState({ value: '', copied: false })
   const isSeq = data.item.length > 1
   const appDispatch = useContext(DispatchContext)
   const urlEscape = `%${[]
@@ -27,7 +27,7 @@ function Inspector({ inspectoropen, data }) {
   const copyFlashHandler = msg => {
     appDispatch({ type: 'flashMessage', value: `${msg} copied` })
   }
-  const escapeListenerCheck = e => {
+  function escapeListenerCheck(e) {
     if (e.key === 'Escape') {
       window.removeEventListener('keydown', escapeListenerCheck)
       closeHandler()

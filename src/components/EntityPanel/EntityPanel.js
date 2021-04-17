@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import styles from './entitypanel.module.css'
 import DispatchContext from '../../DispatchContext'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
@@ -46,7 +46,9 @@ function EntityPanel({ query, entityType, entityHandler }) {
   }
   return (
     <div className="entityContainer">
-      <div className={styles.title}>Entities</div>
+      <div className="entityContainer--header">
+        <p className="panelTitle">Entities</p>
+      </div>
       {query.length ? (
         <div className={styles.wrapper}>
           <Dropdown options={options} onChange={selectHandler} value={defaultOption} placeholder="Select an option" />

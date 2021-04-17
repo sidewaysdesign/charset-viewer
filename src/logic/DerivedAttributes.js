@@ -54,4 +54,16 @@ const checkUnavailable = (function (chr) {
   return glyphStatusFunc
 })()
 
-export { isBlank, checkUnavailable }
+const decodeEntities = (function () {
+  const element = document.createElement('div')
+  function decodeHTMLEntities(str) {
+    if (str && typeof str === 'string') {
+      element.innerHTML = str
+      str = element.textContent
+    }
+    return str
+  }
+  return decodeHTMLEntities
+})()
+
+export { isBlank, checkUnavailable, decodeEntities }

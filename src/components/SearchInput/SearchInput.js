@@ -1,14 +1,23 @@
-import React, { useContext, useCallback, useMemo } from 'react'
-import { unicodeNames, unicodeNumbers } from '../../unicode/UnicodeData'
+import React, { useContext, useCallback, useMemo, useEffect } from 'react'
+import { unicodeNames, unicodeObj } from '../../unicode/UnicodeData'
 import DispatchContext from '../../DispatchContext'
 import DebouncedInput from '../../logic/DebouncedInput'
 import { flagSet } from '../../logic/MultiCodePoints'
+import useQueryParam from '../../logic/QueryParameters'
+import { decodeEntities } from '../../logic/DerivedAttributes'
 
 // import Pluralize from 'pluralize'
 import Fuse from 'fuse.js'
 
 function SearchInput({ query, onInputChange, placeholder }) {
-  const searchAccuracy = 0.18
+  var t1, t2
+  const [search, setSearch] = useQueryParam('s', '')
+  useEffect(() => {
+    if (search !== '') {
+      handleFieldChange(decodeURIComponent(search))
+    }
+  }, [])
+  const searchAccuracy = 0.25
   const fuseMain = useMemo(() => {
     return new Fuse(unicodeNames, {
       minMatchCharLength: 3,
@@ -26,27 +35,34 @@ function SearchInput({ query, onInputChange, placeholder }) {
       includeScore: true
     })
   }, [flagSet, searchAccuracy])
-
   const appDispatch = useContext(DispatchContext)
-  let newquery = query
+
+  let newquery = search !== '' ? decodeURIComponent(search) : query
   const resetCurrentPage = useCallback(e => onInputChange(0), [onInputChange])
   function handleFieldChange(newquery) {
+    const noentityquery = newquery.replace(/&#[0-9]{1,6};|&[a-z]+;/g, '')
     if (newquery.length === 0) {
       appDispatch({ type: 'showsearchresults', value: [], query: newquery })
       appDispatch({ type: 'defaultmodeupdate', value: 'auto' })
       return
     }
     let results = []
+    const literalEntities = q => {
+      const queryEntities = q.match(/&#[0-9]{1,6};|&[a-z]+;/g)
+      if (queryEntities) {
+        const nonRedundant = new Set(queryEntities)
+        return queryEntities.map(i => unicodeObj[decodeEntities(i).codePointAt(0).toString(16).toUpperCase().padStart(4, '0')])
+      }
+      return []
+    }
 
     const codePointMatch = q => {
-      const utf8String = Array.from(q)
+      const utf8String = new Set(Array.from(q))
       utf8String.forEach(glyph => {
-        results.push(unicodeNumbers.findIndex(el => el === glyph.codePointAt().toString(16).toUpperCase().padStart(4, '0')))
+        results.push(unicodeObj[glyph.codePointAt().toString(16).toUpperCase().padStart(4, '0')])
       })
       return results
     }
-    const fuseMainResults = fuseMain.search(newquery).map(x => x.refIndex)
-
     const flagGlyphSearch = q => {
       const flagRegex = /[\uD83C][\uDDE6-\uDDFF][\uD83C][\uDDE6-\uDDFF]/g
       const allFlags = q.match(flagRegex)
@@ -55,17 +71,18 @@ function SearchInput({ query, onInputChange, placeholder }) {
       allFlags.forEach(glyph => collection.push(Array.from(glyph).map(i => i.codePointAt())))
       return collection
     }
-    const flagWordSearch = fuseFlags.search(newquery).map(x => x.item.sequence)
-    console.log(flagWordSearch)
-    results = [...flagGlyphSearch(newquery), ...flagWordSearch, ...fuseMainResults, ...new Set(codePointMatch(newquery))]
+    const fuseMainResults = fuseMain.search(noentityquery).map(x => x.refIndex)
+    const flagWordSearch = fuseFlags.search(noentityquery).map(x => x.item.sequence)
+    results = [...new Set([...flagGlyphSearch(newquery), ...literalEntities(newquery), ...flagWordSearch, ...fuseMainResults, ...codePointMatch(newquery)])]
     if (results.length) {
       resetCurrentPage()
       appDispatch({ type: 'showsearchresults', results: results.filter(i => i > 0 || typeof i === 'object'), query: newquery })
     }
+    setSearch(encodeURIComponent(newquery))
+
     return
   }
-
-  return <DebouncedInput placeholder={placeholder} value={newquery} onDebouncedValChange={e => handleFieldChange(e)} delay={10} />
+  return <DebouncedInput placeholder={placeholder} value={newquery} onDebouncedValChange={e => handleFieldChange(e)} delay={200} />
 }
 
 export default SearchInput
