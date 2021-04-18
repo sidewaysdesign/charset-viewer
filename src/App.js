@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import ourReducer from './logic/OurReducer'
-// import Paginators from './components/Paginators/Paginators'
 import GlyphCard from './components/GlyphCard/GlyphCard'
 import Inspector from './components/Inspector/Inspector'
 import SearchInput from './components/SearchInput/SearchInput'
 import ModeToggle from './components/ModeToggle/ModeToggle'
 import GlyphNamesToggle from './components/GlyphCardControls/GlyphCardControls'
-// import { unicodeData } from './unicode/UnicodeData'
 import StateContext from './StateContext'
 import DispatchContext from './DispatchContext'
 import EntityPanel from './components/EntityPanel/EntityPanel'
@@ -28,7 +26,7 @@ import './App.css'
 /* TODO: add glyph sequence detection/display to input */
 /* TODO: eliminate tiny animated movement of "back to glyphs" at short height */
 
-const initialResultsPerPage = 200
+const initialResultsPerPage = 1000
 const useStateWithLocalStorage = (localStorageKey, defaultValue) => {
   const [value, setValue] = useState(localStorage.getItem(localStorageKey) || defaultValue)
   localStorage.setItem(localStorageKey, value)
@@ -36,7 +34,6 @@ const useStateWithLocalStorage = (localStorageKey, defaultValue) => {
 }
 function App() {
   const [currentPage, setCurrentPage] = useState(0)
-  // const [resultsPerPage, setResultsPerPage] = useState(initialResultsPerPage)
   const resultsPerPage = initialResultsPerPage
   const [modeToggle, setModeToggle] = useStateWithLocalStorage('modeToggle', 'entities')
   const [glyphnameToggle, setGlyphnameToggle] = useStateWithLocalStorage('glyphnameToggle', 'shownames')
@@ -86,7 +83,7 @@ function App() {
             <div className={`outputContainer${modeToggle === 'entities' ? ' showentities' : ''}`}>
               <div className="glyphcardContainer">
                 <div className={`glyphcardWrapper${state.inspectorOpen ? ' inspectoropen' : ''}`}>
-                  <GlyphNamesToggle toggle={glyphnameToggle} toggleHandler={toggleHandler} />
+                  <GlyphNamesToggle count={state.results ? state.results.length : 0} toggle={glyphnameToggle} toggleHandler={toggleHandler} />
                   <div className="glyphPanelContainer">
                     <div className="glyphPanelUnit">
                       <ul className={`glyphcardList${glyphnameToggle === 'shownames' ? ' shownames' : ''}`}>{hasQuery && validResults(state.results) ? rangeHandler(state.results).map((item, index) => <GlyphCard item={item} key={index} inspectoropen={state.inspectorOpen} />) : null}</ul>

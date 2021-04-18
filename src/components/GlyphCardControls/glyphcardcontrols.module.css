@@ -53,3 +53,10 @@
     @mixin toggleIconActive;
   }
 }
+.count {
+  /* font-weight: lighter; */
+  font-size: 1.25ex;
+  opacity: 0.66;
+  margin-left: resolve($margin * 0.5);
+  white-space: nowrap;
+}
