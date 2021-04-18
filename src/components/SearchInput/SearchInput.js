@@ -10,13 +10,16 @@ import { decodeEntities } from '../../logic/DerivedAttributes'
 import Fuse from 'fuse.js'
 
 function SearchInput({ query, onInputChange, placeholder }) {
-  var t1, t2
   const [search, setSearch] = useQueryParam('s', '')
+
+  const stableHandleFieldChange = useCallback(handleFieldChange, [])
+
   useEffect(() => {
     if (search !== '') {
-      handleFieldChange(decodeURIComponent(search))
+      stableHandleFieldChange(decodeURIComponent(search))
     }
-  }, [])
+  }, [search, stableHandleFieldChange])
+
   const searchAccuracy = 0.25
   const fuseMain = useMemo(() => {
     return new Fuse(unicodeNames, {
@@ -34,7 +37,7 @@ function SearchInput({ query, onInputChange, placeholder }) {
       threshold: searchAccuracy,
       includeScore: true
     })
-  }, [flagSet, searchAccuracy])
+  }, [searchAccuracy])
   const appDispatch = useContext(DispatchContext)
 
   let newquery = search !== '' ? decodeURIComponent(search) : query
@@ -50,8 +53,8 @@ function SearchInput({ query, onInputChange, placeholder }) {
     const literalEntities = q => {
       const queryEntities = q.match(/&#[0-9]{1,6};|&[a-z]+;/g)
       if (queryEntities) {
-        const nonRedundant = new Set(queryEntities)
-        return queryEntities.map(i => unicodeObj[decodeEntities(i).codePointAt(0).toString(16).toUpperCase().padStart(4, '0')])
+        const nonRedundant = [...new Set(queryEntities)]
+        return nonRedundant.map(i => unicodeObj[decodeEntities(i).codePointAt(0).toString(16).toUpperCase().padStart(4, '0')])
       }
       return []
     }

@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/glyphworks/static/css/main.b667fc1e.chunk.css",
-    "main.js": "/glyphworks/static/js/main.11eacd4a.chunk.js",
-    "main.js.map": "/glyphworks/static/js/main.11eacd4a.chunk.js.map",
+    "main.css": "/glyphworks/static/css/main.4778dd79.chunk.css",
+    "main.js": "/glyphworks/static/js/main.dd1751ef.chunk.js",
+    "main.js.map": "/glyphworks/static/js/main.dd1751ef.chunk.js.map",
     "runtime-main.js": "/glyphworks/static/js/runtime-main.14ca61ec.js",
     "runtime-main.js.map": "/glyphworks/static/js/runtime-main.14ca61ec.js.map",
-    "static/js/2.c4de9894.chunk.js": "/glyphworks/static/js/2.c4de9894.chunk.js",
-    "static/js/2.c4de9894.chunk.js.map": "/glyphworks/static/js/2.c4de9894.chunk.js.map",
+    "static/js/2.1a0c1d07.chunk.js": "/glyphworks/static/js/2.1a0c1d07.chunk.js",
+    "static/js/2.1a0c1d07.chunk.js.map": "/glyphworks/static/js/2.1a0c1d07.chunk.js.map",
     "index.html": "/glyphworks/index.html",
-    "precache-manifest.169a7d5b66b313dceb32d0836b330ce3.js": "/glyphworks/precache-manifest.169a7d5b66b313dceb32d0836b330ce3.js",
+    "precache-manifest.abffdffad2ae607a1f41fda2479c8da3.js": "/glyphworks/precache-manifest.abffdffad2ae607a1f41fda2479c8da3.js",
     "service-worker.js": "/glyphworks/service-worker.js",
-    "static/css/main.b667fc1e.chunk.css.map": "/glyphworks/static/css/main.b667fc1e.chunk.css.map",
-    "static/js/2.c4de9894.chunk.js.LICENSE.txt": "/glyphworks/static/js/2.c4de9894.chunk.js.LICENSE.txt"
+    "static/css/main.4778dd79.chunk.css.map": "/glyphworks/static/css/main.4778dd79.chunk.css.map",
+    "static/js/2.1a0c1d07.chunk.js.LICENSE.txt": "/glyphworks/static/js/2.1a0c1d07.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.14ca61ec.js",
-    "static/js/2.c4de9894.chunk.js",
-    "static/css/main.b667fc1e.chunk.css",
-    "static/js/main.11eacd4a.chunk.js"
+    "static/js/2.1a0c1d07.chunk.js",
+    "static/css/main.4778dd79.chunk.css",
+    "static/js/main.dd1751ef.chunk.js"
   ]
 }

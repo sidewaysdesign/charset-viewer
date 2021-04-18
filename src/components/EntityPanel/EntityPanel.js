@@ -1,13 +1,11 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styles from './entitypanel.module.css'
-import DispatchContext from '../../DispatchContext'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import Dropdown from 'react-dropdown'
 
 const Entities = require('html-entities').AllHtmlEntities
 
-function EntityPanel({ query, entityType, entityHandler }) {
-  const appDispatch = useContext(DispatchContext)
+function EntityPanel({ query, entityType, entityHandler, messageAction }) {
   const options = [
     { value: 'htmlentities', label: 'HTML Entities' },
     { value: 'urlescape', label: 'URL Escape Codes' }
@@ -16,7 +14,9 @@ function EntityPanel({ query, entityType, entityHandler }) {
   let defaultOption = options[options.findIndex(p => p.value === entityType)]
   const selectHandler = ({ value }) => entityHandler(value)
 
-  const copyFlashHandler = msg => appDispatch({ type: 'flashMessage', value: `${msg} copied` })
+  const copyFlashHandler = msg => {
+    return messageAction(`${msg} copied`)
+  }
 
   function RenderEntityFields({ query, type }) {
     let entitystring = ''

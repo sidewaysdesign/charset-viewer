@@ -1,11 +1,11 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useCallback } from 'react'
 import DispatchContext from '../../DispatchContext'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import styles from './inspector.module.css'
 import { OversizeCharCompensator } from '../../logic/OversizeCharCompensator'
 // import { hyphenTitleCase } from '../../logic/CaseHandlers'
 
-function Inspector({ inspectoropen, data }) {
+function Inspector({ inspectoropen, data, messageAction }) {
   // const [copiedEntity, setCopiedEntity] = useState({ value: '', copied: false })
   const isSeq = data.item.length > 1
   const appDispatch = useContext(DispatchContext)
@@ -20,28 +20,31 @@ function Inspector({ inspectoropen, data }) {
     .join(';&#')};`
   const htmlEntityHex = `&#x${[].concat(data.glyph || []).join(';&#x')};`
   const cssEncode = `\\${[].concat(data.glyph || []).join('\\')}`
-
   const closeHandler = () => {
     appDispatch({ type: 'closeinspector', inspectoropen: false })
   }
   const copyFlashHandler = msg => {
-    appDispatch({ type: 'flashMessage', value: `${msg} copied` })
+    return messageAction(`${msg} copied`)
   }
-  function escapeListenerCheck(e) {
-    if (e.key === 'Escape') {
-      window.removeEventListener('keydown', escapeListenerCheck)
-      closeHandler()
-    }
-  }
+  const stableCloseHandler = useCallback(closeHandler, [])
 
-  useEffect(() => window.addEventListener('keydown', escapeListenerCheck), [])
+  useEffect(() => {
+    function escapeListenerCheck(e) {
+      if (e.key === 'Escape') {
+        window.removeEventListener('keydown', escapeListenerCheck)
+        stableCloseHandler()
+      }
+    }
+    window.addEventListener('keydown', escapeListenerCheck)
+  }, [stableCloseHandler])
+
   const EntityData = ({ str, delim, dataType, flashMessage }) => {
     const regex = RegExp(`(?=${delim})`, 'g')
     return (
       <CopyToClipboard onCopy={() => copyFlashHandler(flashMessage)} text={str}>
         <p data-type={dataType} className={`pseudocopybutton ${styles.inspector_entity}`}>
-          {str.split(regex).map(i => (
-            <span>{i}</span>
+          {str.split(regex).map((i, idx) => (
+            <span key={idx}>{i}</span>
           ))}
         </p>
       </CopyToClipboard>

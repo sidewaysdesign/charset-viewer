@@ -11,9 +11,6 @@ function ourReducer(draft, action) {
     case 'queryupdate':
       draft.query = action.value
       return
-    case 'flashMessage':
-      draft.flashMessages.push(action.value)
-      return
     case 'openinspector':
       draft.inspectorOpen = action.inspectoropen
       draft.inspectorData = action.data

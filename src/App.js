@@ -32,12 +32,17 @@ const useStateWithLocalStorage = (localStorageKey, defaultValue) => {
   localStorage.setItem(localStorageKey, value)
   return [value, setValue]
 }
+
 function App() {
   const [currentPage, setCurrentPage] = useState(0)
   const resultsPerPage = initialResultsPerPage
   const [modeToggle, setModeToggle] = useStateWithLocalStorage('modeToggle', 'entities')
   const [glyphnameToggle, setGlyphnameToggle] = useStateWithLocalStorage('glyphnameToggle', 'shownames')
   const [entityType, setEntityType] = useStateWithLocalStorage('entityType', 'urlescape')
+  const [messageState, setMessageState] = useState([])
+  const updateMessageAction = msg => {
+    setMessageState([...messageState, msg])
+  }
   const originalState = {
     query: '',
     results: [],
@@ -45,17 +50,20 @@ function App() {
     inspectorOpen: false,
     inspectorIndex: null
   }
+
   const modeHandler = state => setModeToggle(state)
   const toggleHandler = state => {
     setGlyphnameToggle(state === 'shownames' ? 'hidenames' : 'shownames')
   }
   const entityHandler = state => setEntityType(state)
-  const [uiStorage, setUiStorage] = useState(
-    JSON.parse(localStorage.getItem('uiStorage')) || {
-      glyphs: true,
-      htmlEntities: false
-    }
-  )
+  const uiStorage = JSON.parse(localStorage.getItem('uiStorage')) || { glyphs: true, htmlEntities: false }
+
+  // const [uiStorage, setUiStorage] = useState(
+  //   JSON.parse(localStorage.getItem('uiStorage')) || {
+  //     glyphs: true,
+  //     htmlEntities: false
+  //   }
+  // )
 
   useEffect(() => {
     localStorage.setItem('uiStorage', JSON.stringify(uiStorage))
@@ -88,17 +96,17 @@ function App() {
                     <div className="glyphPanelUnit">
                       <ul className={`glyphcardList${glyphnameToggle === 'shownames' ? ' shownames' : ''}`}>{hasQuery && validResults(state.results) ? rangeHandler(state.results).map((item, index) => <GlyphCard item={item} key={index} inspectoropen={state.inspectorOpen} />) : null}</ul>
                     </div>
-                    <div className="glyphPanelUnit">{state.inspectorOpen && state.inspectorData ? <Inspector data={state.inspectorData} /> : ''}</div>
+                    <div className="glyphPanelUnit">{state.inspectorOpen && state.inspectorData ? <Inspector messageAction={updateMessageAction} data={state.inspectorData} /> : ''}</div>
                   </div>
                 </div>
               </div>
-              <EntityPanel query={state.query} entityType={entityType} entityHandler={entityHandler} />
+              <EntityPanel messageAction={updateMessageAction} query={state.query} entityType={entityType} entityHandler={entityHandler} />
             </div>
             <Footer />
           </div>
         </DispatchContext.Provider>
-        <FlashAlerts messages={state.flashMessages} />
       </StateContext.Provider>
+      <FlashAlerts messages={messageState} />
     </>
   )
 }

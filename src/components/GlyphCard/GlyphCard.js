@@ -18,7 +18,6 @@ function GlyphCard({ item, inspectoropen }) {
   const isunavailable = checkUnavailable(characterString)
   const openInspectorHandler = () => {
     if (!inspectoropen) {
-      console.log('characterString', characterString)
       appDispatch({ type: 'openinspector', inspectoropen: true, data: { item, glyph, processedName, characterString, unicat, isunavailable } })
     }
   }

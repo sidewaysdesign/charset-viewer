@@ -1,7 +1,7 @@
 @import '../../modules/breakpoints.css';
 @import '../../modules/variables.css';
 
-:global .flash-alert {
+.flashAlert {
   position: fixed;
   font-size: $fontsize1;
   color: white;
@@ -13,7 +13,9 @@
   transform: translateX(-50%);
   opacity: 1;
   background: $ramp no-repeat;
-  animation: flashAlertAnim cubic-bezier(0.48, 0.04, 0.56, 1.02) 1.25s forwards;
+  & :global {
+    animation: flashAlertAnim cubic-bezier(0.48, 0.04, 0.56, 1.02) 1.25s forwards;
+  }
   text-align: center;
   padding: 0.5rem 0.75rem;
   @mixin atSm {
@@ -22,12 +24,9 @@
   span {
     font-weight: 600;
   }
-  &::before {
-    content: ;
-  }
   /* keyframe animation is located in global scope index.css */
 }
 
-:global .flash-alerts :global .flash-alert:last-of-type {
+.flashAlerts .flashAlert:last-of-type {
   display: block;
 }
